@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="az">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | AutoDetail.az</title>
+  <link href="./style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body class="text-bg-dark d-flex flex-column min-vh-100">
+  <header class="p-3 text-bg-dark">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+            <use xlink:href="#bootstrap"></use>
+          </svg>
+        </a>
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li class="maşın-logo"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-car-front-fill" viewBox="0 0 16 16">
+              <path
+                d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z" />
+            </svg></li>
+          <li><a href="./index.html" class="nav-link px-2 text-white">Home</a></li>
+          <li><a href="./contact.html" class="nav-link px-2 text-white">Contact</a></li>
+          <li><a href="./profile.html" class="nav-link px-2 text-white">Profil</a></li>
+          <li><a href="./about.html" class="nav-link px-2 text-white">About</a></li>
+          <li><a href="./admin.html" class="nav-link px-2 text-secondary">Admin</a></li>
+        </ul>
+        <div class="text-end">
+          <button id="logout-btn" type="button" class="btn btn-outline-light btn-sm">Log out</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <hr class="border-light border-2 opacity-75 my-0">
+
+  <main class="container py-4 flex-grow-1">
+    <h1 class="h3 mb-3">Admin Panel</h1>
+    <div id="admin-message" class="text-warning mb-3"></div>
+
+    <ul class="nav nav-pills mb-3" id="admin-tabs">
+      <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab-users" type="button">Users</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-posts" type="button">Posts</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-cars" type="button">Cars</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-models" type="button">Car Models</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-parts" type="button">Parts</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-pending" type="button">Pending</button></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane fade show active" id="tab-users">
+        <div class="table-responsive">
+          <table class="table table-dark table-striped align-middle">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Ad</th>
+                <th>Email</th>
+                <th>Telefon</th>
+                <th>Rol</th>
+                <th>Tarix</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="users-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="tab-posts">
+        <div class="table-responsive">
+          <table class="table table-dark table-striped align-middle">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Başlıq</th>
+                <th>İstifadəçi</th>
+                <th>Qiymət</th>
+                <th>Tarix</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="posts-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="tab-cars">
+        <div class="card text-bg-dark border-light mb-3">
+          <div class="card-body">
+            <div class="row g-2 mb-3">
+              <div class="col-md-3"><input id="cars-filter-brand" class="form-control" placeholder="Brand filter"></div>
+              <div class="col-md-3"><input id="cars-filter-model" class="form-control" placeholder="Model filter"></div>
+              <div class="col-md-2"><input id="cars-filter-year" class="form-control" placeholder="Year filter"></div>
+              <div class="col-md-2"><input id="cars-filter-color" class="form-control" placeholder="Color filter"></div>
+              <div class="col-md-2"><button id="cars-clear" class="btn btn-outline-light w-100">Clear</button></div>
+            </div>
+            <div class="row g-2">
+              <div class="col-12">
+                <button id="car-add-toggle" class="btn btn-warning w-100">Add new car</button>
+              </div>
+            </div>
+            <div id="car-add-form" class="row g-2 mt-3 d-none">
+              <div class="col-md-3"><input id="car-brand" class="form-control" placeholder="Brand"></div>
+              <div class="col-md-3"><input id="car-model" class="form-control" placeholder="Model"></div>
+              <div class="col-md-2"><input id="car-year" class="form-control" placeholder="Year"></div>
+              <div class="col-md-2"><input id="car-color" class="form-control" placeholder="Color"></div>
+              <div class="col-md-2"><button id="car-add" class="btn btn-warning w-100">Add</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-dark table-striped align-middle">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Color</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="cars-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="tab-models">
+        <div class="card text-bg-dark border-light mb-3">
+          <div class="card-body">
+            <div class="row g-2 mb-3">
+              <div class="col-12">
+                <input id="models-search" class="form-control" placeholder="Search models...">
+              </div>
+            </div>
+            <div class="row g-2">
+              <div class="col-12">
+                <button id="model-add-toggle" class="btn btn-warning w-100">Add new model</button>
+              </div>
+            </div>
+            <div id="model-add-form" class="row g-2 mt-3 d-none">
+              <div class="col-md-5"><input id="model-brand" class="form-control" placeholder="Brand"></div>
+              <div class="col-md-5"><input id="model-model" class="form-control" placeholder="Model"></div>
+              <div class="col-md-2"><button id="model-add" class="btn btn-warning w-100">Add</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-dark table-striped align-middle">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="models-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="tab-parts">
+        <div class="card text-bg-dark border-light mb-3">
+          <div class="card-body">
+            <div class="row g-2 mb-3">
+              <div class="col-12">
+                <input id="parts-search" class="form-control" placeholder="Search parts...">
+              </div>
+            </div>
+            <div class="row g-2">
+              <div class="col-12">
+                <button id="part-add-toggle" class="btn btn-warning w-100">Add new part</button>
+              </div>
+            </div>
+            <div id="part-add-form" class="row g-2 mt-3 d-none">
+              <div class="col-md-5"><input id="part-category" class="form-control" placeholder="Category"></div>
+              <div class="col-md-5"><input id="part-name" class="form-control" placeholder="Name"></div>
+              <div class="col-md-2"><button id="part-add" class="btn btn-warning w-100">Add</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-dark table-striped align-middle">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Category</th>
+                <th>Name</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="parts-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="tab-pending">
+        <h5 class="mb-2">Pending Users</h5>
+        <div class="table-responsive mb-4">
+          <table class="table table-dark table-striped align-middle">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Ad</th>
+                <th>Email</th>
+                <th>Telefon</th>
+                <th>Kod</th>
+                <th>Tarix</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="pending-users-tbody"></tbody>
+          </table>
+        </div>
+
+        <h5 class="mb-2">Pending Cars</h5>
+        <div class="table-responsive">
+          <table class="table table-dark table-striped align-middle">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Color</th>
+                <th>Requested By</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="pending-cars-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <hr class="border-light border-2 opacity-75 my-0">
+  <footer class="bg-dark text-white py-3 mt-auto">
+    <div class="container">
+      <p class="text-center mb-0">© 2026 AutoDetail.az</p>
+    </div>
+  </footer>
+
+  <script>
+    const adminMessage = document.getElementById('admin-message');
+    const currentUserRaw = localStorage.getItem('currentUser');
+    if (!currentUserRaw) {
+      window.location.href = './index.html';
+    }
+    const currentUser = currentUserRaw ? JSON.parse(currentUserRaw) : null;
+    const adminEmail = currentUser ? currentUser.email : null;
+
+    const api = async (path, options = {}) => {
+      const opts = { ...options };
+      opts.headers = opts.headers || {};
+      if (opts.body && !opts.headers['Content-Type'] && !(opts.body instanceof FormData)) {
+        opts.headers['Content-Type'] = 'application/json';
+      }
+      const url = path.includes('?') ? `${path}&email=${encodeURIComponent(adminEmail)}` : `${path}?email=${encodeURIComponent(adminEmail)}`;
+      const res = await fetch(url, opts);
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(data.error || 'Request failed');
+      }
+      return data;
+    };
+
+    const ensureAdmin = async () => {
+      try {
+        const data = await fetch(`/api/profile?email=${encodeURIComponent(adminEmail)}`).then(r => r.json());
+        if (!data.user || String(data.user.role).toLowerCase() !== 'admin') {
+          window.location.href = './index.html';
+        }
+      } catch {
+        window.location.href = './index.html';
+      }
+    };
+
+    const renderUsers = (users) => {
+      const tbody = document.getElementById('users-tbody');
+      tbody.innerHTML = users.map(u => `
+        <tr>
+          <td>${u.idUsers}</td>
+          <td><span class="val">${u.UserName}</span></td>
+          <td><span class="val">${u.email}</span></td>
+          <td><span class="val">${u.phone || '-'}</span></td>
+          <td><span class="val">${u.role}</span></td>
+          <td>${new Date(u.created_at).toLocaleDateString('az-AZ')}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-light" data-action="edit-user" data-id="${u.idUsers}">Edit</button>
+            <button class="btn btn-sm btn-outline-danger" data-action="delete-user" data-id="${u.idUsers}">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+    };
+
+    const renderPosts = (posts) => {
+      const tbody = document.getElementById('posts-tbody');
+      tbody.innerHTML = posts.map(p => `
+        <tr>
+          <td>${p.id}</td>
+          <td><span class="val">${p.title || '-'}</span></td>
+          <td><span class="val">${p.user_email || '-'}</span></td>
+          <td><span class="val">${p.price !== null && p.price !== undefined ? `${p.price} ${p.price_currency || ''}`.trim() : '-'}</span></td>
+          <td>${new Date(p.created_at).toLocaleDateString('az-AZ')}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-light" data-action="edit-post" data-id="${p.id}">Edit</button>
+            <button class="btn btn-sm btn-outline-danger" data-action="delete-post" data-id="${p.id}">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+    };
+
+    const renderCars = (cars) => {
+      const tbody = document.getElementById('cars-tbody');
+      tbody.innerHTML = cars.map(c => `
+        <tr>
+          <td>${c.id}</td>
+          <td>${c.brand}</td>
+          <td>${c.model}</td>
+          <td>${c.year}</td>
+          <td>${c.color}</td>
+          <td><button class="btn btn-sm btn-outline-danger" data-action="delete-car" data-id="${c.id}">Delete</button></td>
+        </tr>
+      `).join('');
+    };
+
+    const renderModels = (models) => {
+      const tbody = document.getElementById('models-tbody');
+      tbody.innerHTML = models.map(m => `
+        <tr>
+          <td>${m.id}</td>
+          <td>${m.brand}</td>
+          <td>${m.model}</td>
+          <td><button class="btn btn-sm btn-outline-danger" data-action="delete-model" data-id="${m.id}">Delete</button></td>
+        </tr>
+      `).join('');
+    };
+
+    const renderParts = (parts) => {
+      const tbody = document.getElementById('parts-tbody');
+      tbody.innerHTML = parts.map(p => `
+        <tr>
+          <td>${p.id}</td>
+          <td>${p.category}</td>
+          <td>${p.name}</td>
+          <td><button class="btn btn-sm btn-outline-danger" data-action="delete-part" data-id="${p.id}">Delete</button></td>
+        </tr>
+      `).join('');
+    };
+
+    const renderPendingUsers = (items) => {
+      const tbody = document.getElementById('pending-users-tbody');
+      tbody.innerHTML = items.map(p => `
+        <tr>
+          <td>${p.id}</td>
+          <td>${p.name}</td>
+          <td>${p.email}</td>
+          <td>${p.phone || '-'}</td>
+          <td>${p.verification_code}</td>
+          <td>${new Date(p.created_at).toLocaleDateString('az-AZ')}</td>
+          <td><button class="btn btn-sm btn-outline-danger" data-action="delete-pending-user" data-id="${p.id}">Delete</button></td>
+        </tr>
+      `).join('');
+    };
+
+    const renderPendingCars = (items) => {
+      const tbody = document.getElementById('pending-cars-tbody');
+      tbody.innerHTML = items.map(p => `
+        <tr>
+          <td>${p.id}</td>
+          <td>${p.brand}</td>
+          <td>${p.model}</td>
+          <td>${p.year}</td>
+          <td>${p.color}</td>
+          <td>${p.requested_by || '-'}</td>
+          <td>
+            <button class="btn btn-sm btn-success" data-action="approve-car" data-id="${p.id}">Approve</button>
+            <button class="btn btn-sm btn-outline-danger" data-action="delete-pending-car" data-id="${p.id}">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+    };
+
+    let carsCache = [];
+    let modelsCache = [];
+    let partsCache = [];
+
+    const loadAll = async () => {
+      try {
+        await ensureAdmin();
+        const [users, posts, cars, models, parts, pendingUsers, pendingCars] = await Promise.all([
+          api('/api/admin/users'),
+          api('/api/admin/posts'),
+          api('/api/admin/cars'),
+          api('/api/admin/car-models'),
+          api('/api/admin/parts'),
+          api('/api/admin/pending-users'),
+          api('/api/admin/pending-cars')
+        ]);
+        renderUsers(users.users || []);
+        renderPosts(posts.posts || []);
+        carsCache = cars.cars || [];
+        modelsCache = models.models || [];
+        partsCache = parts.parts || [];
+        renderCars(carsCache);
+        renderModels(modelsCache);
+        renderParts(partsCache);
+        renderPendingUsers(pendingUsers.pending_users || []);
+        renderPendingCars(pendingCars.pending_cars || []);
+      } catch (err) {
+        adminMessage.textContent = err.message || 'Admin data yüklənmədi.';
+      }
+    };
+
+    const buildIndex = (list, fields) => {
+      list.forEach((item) => {
+        if (!item._q) {
+          item._q = fields.map((f) => String(item[f] || '')).join(' ').toLowerCase();
+        }
+      });
+      return list;
+    };
+
+    const filterList = (list, q, fields) => {
+      const term = q.trim().toLowerCase();
+      if (!term) return list;
+      const indexed = buildIndex(list, fields);
+      return indexed.filter((item) => item._q.includes(term));
+    };
+
+    const carsFilterBrand = document.getElementById('cars-filter-brand');
+    const carsFilterModel = document.getElementById('cars-filter-model');
+    const carsFilterYear = document.getElementById('cars-filter-year');
+    const carsFilterColor = document.getElementById('cars-filter-color');
+    const carsClear = document.getElementById('cars-clear');
+
+    const applyCarsFilters = () => {
+      const b = (carsFilterBrand?.value || '').trim().toLowerCase();
+      const m = (carsFilterModel?.value || '').trim().toLowerCase();
+      const y = (carsFilterYear?.value || '').trim().toLowerCase();
+      const c = (carsFilterColor?.value || '').trim().toLowerCase();
+      let list = carsCache;
+      if (b) list = list.filter((x) => String(x.brand || '').toLowerCase().includes(b));
+      if (m) list = list.filter((x) => String(x.model || '').toLowerCase().includes(m));
+      if (y) list = list.filter((x) => String(x.year || '').toLowerCase().includes(y));
+      if (c) list = list.filter((x) => String(x.color || '').toLowerCase().includes(c));
+      renderCars(list);
+    };
+
+    [carsFilterBrand, carsFilterModel, carsFilterYear, carsFilterColor].forEach((el) => {
+      if (el) el.addEventListener('input', applyCarsFilters);
+    });
+    if (carsClear) {
+      carsClear.addEventListener('click', () => {
+        if (carsFilterBrand) carsFilterBrand.value = '';
+        if (carsFilterModel) carsFilterModel.value = '';
+        if (carsFilterYear) carsFilterYear.value = '';
+        if (carsFilterColor) carsFilterColor.value = '';
+        renderCars(carsCache);
+      });
+    }
+
+    const modelsSearch = document.getElementById('models-search');
+    if (modelsSearch) {
+      modelsSearch.addEventListener('input', () => {
+        renderModels(filterList(modelsCache, modelsSearch.value, ['brand', 'model']));
+      });
+    }
+
+    const partsSearch = document.getElementById('parts-search');
+    if (partsSearch) {
+      partsSearch.addEventListener('input', () => {
+        renderParts(filterList(partsCache, partsSearch.value, ['category', 'name']));
+      });
+    }
+
+    const setRowEdit = (tr, fields) => {
+      tr.querySelectorAll('.val').forEach((el, idx) => {
+        const key = fields[idx];
+        if (!key) return;
+        const value = el.textContent.trim() === '-' ? '' : el.textContent.trim();
+        if (key === 'role') {
+          const selectedUser = value.toLowerCase() === 'admin' ? 'admin' : 'user';
+          el.outerHTML = `
+            <select class="form-select form-select-sm" data-field="${key}">
+              <option value="user" ${selectedUser === 'user' ? 'selected' : ''}>user</option>
+              <option value="admin" ${selectedUser === 'admin' ? 'selected' : ''}>admin</option>
+            </select>
+          `;
+        } else {
+          el.outerHTML = `<input class="form-control form-control-sm" data-field="${key}" value="${value}">`;
+        }
+      });
+      const actionCell = tr.querySelector('td:last-child');
+      actionCell.innerHTML = `
+        <button class="btn btn-sm btn-warning me-1" data-action="save-row" data-kind="${tr.dataset.kind}" data-id="${tr.dataset.id}">Save</button>
+        <button class="btn btn-sm btn-outline-light" data-action="cancel-row">Cancel</button>
+      `;
+    };
+
+    const restoreRow = async () => {
+      await loadAll();
+    };
+
+    document.body.addEventListener('click', async (e) => {
+      const btn = e.target.closest('button[data-action]');
+      if (!btn) return;
+      const action = btn.dataset.action;
+      const id = btn.dataset.id;
+      try {
+        let shouldReload = false;
+        if (action === 'edit-user') {
+          const tr = btn.closest('tr');
+          tr.dataset.kind = 'user';
+          tr.dataset.id = id;
+          setRowEdit(tr, ['name', 'email', 'phone', 'role']);
+          shouldReload = false;
+        }
+        if (action === 'delete-user') {
+          if (!confirm('İstifadəçi silinsin?')) return;
+          await api(`/api/admin/users/${id}`, { method: 'DELETE', body: JSON.stringify({}) });
+          shouldReload = true;
+        }
+        if (action === 'edit-post') {
+          const tr = btn.closest('tr');
+          tr.dataset.kind = 'post';
+          tr.dataset.id = id;
+          setRowEdit(tr, ['title', 'user_email', 'price']);
+          shouldReload = false;
+        }
+        if (action === 'delete-post') {
+          if (!confirm('Paylaşım silinsin?')) return;
+          await api(`/api/admin/posts/${id}`, { method: 'DELETE', body: JSON.stringify({}) });
+          shouldReload = true;
+        }
+        if (action === 'save-row') {
+          const tr = btn.closest('tr');
+          const kind = btn.dataset.kind;
+          const inputs = tr.querySelectorAll('input[data-field]');
+          const payload = {};
+          inputs.forEach((inp) => {
+            payload[inp.dataset.field] = inp.value;
+          });
+          if (kind === 'user') {
+            await api(`/api/admin/users/${id}`, {
+              method: 'PUT',
+              body: JSON.stringify({ name: payload.name, phone: payload.phone, role: payload.role })
+            });
+          }
+          if (kind === 'post') {
+            const priceParts = (payload.price || '').split(' ');
+            await api(`/api/admin/posts/${id}`, {
+              method: 'PUT',
+              body: JSON.stringify({
+                title: payload.title,
+                price: priceParts[0] || payload.price || '',
+                price_currency: priceParts[1] || ''
+              })
+            });
+          }
+          shouldReload = true;
+        }
+        if (action === 'cancel-row') {
+          shouldReload = true;
+        }
+        if (action === 'delete-car') {
+          if (!confirm('Silinsin?')) return;
+          await api(`/api/admin/cars/${id}`, { method: 'DELETE', body: JSON.stringify({}) });
+          shouldReload = true;
+        }
+        if (action === 'delete-model') {
+          if (!confirm('Silinsin?')) return;
+          await api(`/api/admin/car-models/${id}`, { method: 'DELETE', body: JSON.stringify({}) });
+          shouldReload = true;
+        }
+        if (action === 'delete-part') {
+          if (!confirm('Silinsin?')) return;
+          await api(`/api/admin/parts/${id}`, { method: 'DELETE', body: JSON.stringify({}) });
+          shouldReload = true;
+        }
+        if (action === 'delete-pending-user') {
+          if (!confirm('Silinsin?')) return;
+          await api(`/api/admin/pending-users/${id}`, { method: 'DELETE', body: JSON.stringify({}) });
+          shouldReload = true;
+        }
+        if (action === 'approve-car') {
+          await api(`/api/admin/pending-cars/${id}/approve`, { method: 'POST', body: JSON.stringify({}) });
+          shouldReload = true;
+        }
+        if (action === 'delete-pending-car') {
+          if (!confirm('Silinsin?')) return;
+          await api(`/api/admin/pending-cars/${id}`, { method: 'DELETE', body: JSON.stringify({}) });
+          shouldReload = true;
+        }
+        if (shouldReload) {
+          await loadAll();
+        }
+      } catch (err) {
+        adminMessage.textContent = err.message || 'Əməliyyat baş tutmadı.';
+      }
+    });
+
+    document.getElementById('car-add').addEventListener('click', async () => {
+      try {
+        await api('/api/admin/cars', {
+          method: 'POST',
+          body: JSON.stringify({
+            brand: document.getElementById('car-brand').value,
+            model: document.getElementById('car-model').value,
+            year: document.getElementById('car-year').value,
+            color: document.getElementById('car-color').value
+          })
+        });
+        await loadAll();
+      } catch (err) {
+        adminMessage.textContent = err.message || 'Car əlavə etmək olmadı.';
+      }
+    });
+
+    const carAddToggle = document.getElementById('car-add-toggle');
+    const carAddForm = document.getElementById('car-add-form');
+    if (carAddToggle && carAddForm) {
+      carAddToggle.addEventListener('click', () => {
+        carAddForm.classList.toggle('d-none');
+      });
+    }
+
+    const modelAddToggle = document.getElementById('model-add-toggle');
+    const modelAddForm = document.getElementById('model-add-form');
+    if (modelAddToggle && modelAddForm) {
+      modelAddToggle.addEventListener('click', () => {
+        modelAddForm.classList.toggle('d-none');
+      });
+    }
+
+    document.getElementById('model-add').addEventListener('click', async () => {
+      try {
+        await api('/api/admin/car-models', {
+          method: 'POST',
+          body: JSON.stringify({
+            brand: document.getElementById('model-brand').value,
+            model: document.getElementById('model-model').value
+          })
+        });
+        await loadAll();
+      } catch (err) {
+        adminMessage.textContent = err.message || 'Model əlavə etmək olmadı.';
+      }
+    });
+
+    const partAddToggle = document.getElementById('part-add-toggle');
+    const partAddForm = document.getElementById('part-add-form');
+    if (partAddToggle && partAddForm) {
+      partAddToggle.addEventListener('click', () => {
+        partAddForm.classList.toggle('d-none');
+      });
+    }
+
+    document.getElementById('part-add').addEventListener('click', async () => {
+      try {
+        await api('/api/admin/parts', {
+          method: 'POST',
+          body: JSON.stringify({
+            category: document.getElementById('part-category').value,
+            name: document.getElementById('part-name').value
+          })
+        });
+        await loadAll();
+      } catch (err) {
+        adminMessage.textContent = err.message || 'Hissə əlavə etmək olmadı.';
+      }
+    });
+
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem('currentUser');
+      window.location.href = './index.html';
+    });
+
+    loadAll();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

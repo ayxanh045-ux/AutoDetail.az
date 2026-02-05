@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="az">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paylaşım | AutoDetail.az</title>
+  <link href="./style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body class="text-bg-dark d-flex flex-column min-vh-100">
+  <header class="p-3 text-bg-dark">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+            <use xlink:href="#bootstrap"></use>
+          </svg>
+        </a>
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li class="maşın-logo"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-car-front-fill" viewBox="0 0 16 16">
+              <path
+                d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z" />
+            </svg></li>
+          <li><a href="./index.html" class="nav-link px-2 text-white">Home</a></li>
+          <li><a href="./contact.html" class="nav-link px-2 text-white">Contact</a></li>
+          <li><a href="./profile.html" class="nav-link px-2 text-white">Profil</a></li>
+          <li><a href="./about.html" class="nav-link px-2 text-white">About</a></li>
+          <li><a href="./admin.html" class="nav-link px-2 text-white admin-only d-none">Admin</a></li>
+        </ul>
+        <div class="add-post-center">
+          <button id="add-post-btn" type="button" class="btn btn-warning btn-sm">+</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <hr class="border-light border-2 opacity-75 my-0">
+
+  <main class="container py-5 flex-grow-1">
+    <div id="post-detail"></div>
+  </main>
+  <hr class="border-light border-2 opacity-75 my-0">
+
+  <footer class="bg-dark text-white py-3 mt-auto">
+    <div class="container">
+      <ul class="nav justify-content-center border-bottom pb-0 mb-0">
+        <li class="nav-item"><a href="./index.html" class="nav-link px-2 text-white">Home</a></li>
+        <li class="nav-item"><a href="./contact.html" class="nav-link px-2 text-white">Contact</a></li>
+        <li class="nav-item"><a href="./profile.html" class="nav-link px-2 text-white">Profil</a></li>
+        <li class="nav-item"><a href="./about.html" class="nav-link px-2 text-white">About</a></li>
+      </ul>
+      <p class="text-center mb-0">© 2026 AutoDetail.az</p>
+    </div>
+  </footer>
+
+  <script>
+    const container = document.getElementById('post-detail');
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+
+    const translations = {
+      az: {
+        not_found: 'Paylaşım tapılmadı.',
+        server_error: 'Serverə qoşulmaq olmadı.',
+        label_brand: 'Marka',
+        label_model: 'Model',
+        label_year: 'İl',
+        label_color: 'Rəng',
+        label_part: 'Hissə',
+        label_posted: 'Paylaşan',
+        label_email: 'Email',
+        label_phone: 'Telefon',
+        label_role: 'Rol',
+        label_joined: 'Qoşulma tarixi',
+        label_details: 'Məlumatlar',
+        label_price: 'Qiymət',
+        label_currency: 'Valyuta',
+        label_no_image: 'Şəkil yoxdur',
+        btn_edit: 'Redaktə et',
+        btn_save: 'Yadda saxla',
+        btn_cancel: 'Ləğv et',
+        btn_delete: 'Sil',
+        btn_call: 'Zəng et',
+        msg_delete_confirm: 'Paylaşımı silmək istəyirsiniz?',
+        msg_delete_success: 'Paylaşım silindi.',
+        msg_delete_error: 'Paylaşımı silmək olmadı.',
+        msg_update_success: 'Paylaşım yeniləndi.',
+        msg_update_error: 'Paylaşımı yeniləmək olmadı.'
+      },
+      en: {
+        not_found: 'Post not found.',
+        server_error: 'Could not connect to server.',
+        label_brand: 'Brand',
+        label_model: 'Model',
+        label_year: 'Year',
+        label_color: 'Color',
+        label_part: 'Part',
+        label_posted: 'Posted by',
+        label_email: 'Email',
+        label_phone: 'Phone',
+        label_role: 'Role',
+        label_joined: 'Joined',
+        label_details: 'Details',
+        label_price: 'Price',
+        label_currency: 'Currency',
+        label_no_image: 'No image',
+        btn_edit: 'Edit',
+        btn_save: 'Save',
+        btn_cancel: 'Cancel',
+        btn_delete: 'Delete',
+        btn_call: 'Call',
+        msg_delete_confirm: 'Delete this post?',
+        msg_delete_success: 'Post deleted.',
+        msg_delete_error: 'Could not delete post.',
+        msg_update_success: 'Post updated.',
+        msg_update_error: 'Could not update post.'
+      },
+      ru: {
+        not_found: 'Публикация не найдена.',
+        server_error: 'Не удалось подключиться к серверу.',
+        label_brand: 'Марка',
+        label_model: 'Модель',
+        label_year: 'Год',
+        label_color: 'Цвет',
+        label_part: 'Запчасть',
+        label_posted: 'Автор',
+        label_email: 'Почта',
+        label_phone: 'Телефон',
+        label_role: 'Роль',
+        label_joined: 'Дата регистрации',
+        label_details: 'Детали',
+        label_price: 'Цена',
+        label_currency: 'Валюта',
+        label_no_image: 'Нет изображения',
+        btn_edit: 'Редактировать',
+        btn_save: 'Сохранить',
+        btn_cancel: 'Отмена',
+        btn_delete: 'Удалить',
+        btn_call: 'Позвонить',
+        msg_delete_confirm: 'Удалить публикацию?',
+        msg_delete_success: 'Публикация удалена.',
+        msg_delete_error: 'Не удалось удалить публикацию.',
+        msg_update_success: 'Публикация обновлена.',
+        msg_update_error: 'Не удалось обновить публикацию.'
+      }
+    };
+    const currentLang = localStorage.getItem('siteLang') || 'az';
+    const dict = translations[currentLang] || translations.az;
+    const localeMap = { az: 'az-AZ', en: 'en-US', ru: 'ru-RU' };
+    const locale = localeMap[currentLang] || 'az-AZ';
+    document.documentElement.lang = currentLang;
+
+    const adminLinks = document.querySelectorAll('.admin-only');
+    const headerUser = localStorage.getItem('currentUser');
+    if (headerUser) {
+      const email = JSON.parse(headerUser).email;
+      fetch(`/api/profile?email=${encodeURIComponent(email)}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.user && String(data.user.role).toLowerCase() === 'admin') {
+            adminLinks.forEach((el) => el.classList.remove('d-none'));
+          }
+        })
+        .catch(() => {});
+    }
+
+    if (!id) {
+      container.innerHTML = `<p class="text-danger">${dict.not_found}</p>`;
+    } else {
+      fetch(`/api/posts/${id}`)
+        .then((res) => res.json().then((data) => ({ ok: res.ok, data })))
+        .then(({ ok, data }) => {
+          if (!ok) {
+            container.innerHTML = `<p class="text-danger">${data.error || dict.not_found}</p>`;
+            return;
+          }
+          const post = data.post;
+          const profileImage = post.user_profile_image || './assets/images/default-profile.png';
+          const image = post.image_url
+            ? `<div class="post-image-box mb-3"><img src="${post.image_url}" alt="Paylaşım"></div>`
+            : `<div class="post-image-box mb-3"><div class="text-center text-secondary py-5">${dict.label_no_image}</div></div>`;
+          container.innerHTML = `
+            <div class="card bg-dark text-white border-light shadow-lg">
+              <div class="card-body p-4">
+                <div class="row g-4 align-items-start">
+                  <div class="col-lg-8">
+                    ${image}
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="post-author-card">
+                      <div class="d-flex align-items-center gap-3 mb-3">
+                        <img src="${profileImage}" alt="Profil">
+                        <div>
+                          <div class="fw-semibold">${post.user_name || 'İstifadəçi'}</div>
+                          <div class="text-body-secondary small">${dict.label_posted}</div>
+                        </div>
+                      </div>
+                      <div class="small text-body-secondary">${dict.label_email}:
+                        <span class="text-white blur-reveal" data-value="${post.user_email || '-'}" data-keep="0"><span>${post.user_email || '-'}</span></span>
+                      </div>
+                      <div class="small text-body-secondary">${dict.label_phone}:
+                        <span class="text-white blur-reveal" data-value="${post.user_phone || '-'}" data-keep="7"><span>${post.user_phone || '-'}</span></span>
+                      </div>
+                    </div>
+                    <div id="edit-controls" class="mt-3 d-none">
+                      <button id="edit-btn" type="button" class="btn btn-outline-light btn-sm w-100 mb-2">${dict.btn_edit}</button>
+                      <button id="delete-btn" type="button" class="btn btn-outline-danger btn-sm w-100 mb-2">${dict.btn_delete}</button>
+                      <div id="edit-form" class="post-details-card" hidden>
+                        <div class="mb-2">
+                          <label class="form-label">Title</label>
+                          <input id="edit-title" class="form-control form-control-sm" type="text" value="${post.title || ''}">
+                        </div>
+                        <div class="mb-2">
+                          <label class="form-label">Description</label>
+                          <textarea id="edit-desc" class="form-control form-control-sm" rows="3">${post.description || ''}</textarea>
+                        </div>
+                        <div class="mb-2">
+                          <label class="form-label">${dict.label_part}</label>
+                          <select id="edit-part" class="form-select form-select-sm"></select>
+                        </div>
+                        <div class="mb-2">
+                          <label class="form-label">${dict.label_brand}</label>
+                          <select id="edit-brand" class="form-select form-select-sm"></select>
+                        </div>
+                        <div class="mb-2">
+                          <label class="form-label">${dict.label_model}</label>
+                          <select id="edit-model" class="form-select form-select-sm"></select>
+                        </div>
+                        <div class="mb-2">
+                          <label class="form-label">${dict.label_year}</label>
+                          <select id="edit-year" class="form-select form-select-sm"></select>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">${dict.label_color}</label>
+                          <select id="edit-color" class="form-select form-select-sm"></select>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">${dict.label_price}</label>
+                          <input id="edit-price" class="form-control form-control-sm" type="number" step="0.01" min="0" value="${post.price !== null && post.price !== undefined ? post.price : ''}">
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">${dict.label_currency}</label>
+                          <select id="edit-currency" class="form-select form-select-sm">
+                            <option value="AZN">Manat</option>
+                            <option value="USD">Dollar</option>
+                            <option value="EUR">Euro</option>
+                          </select>
+                        </div>
+                        <div class="d-flex gap-2">
+                          <button id="save-btn" type="button" class="btn btn-warning btn-sm">${dict.btn_save}</button>
+                          <button id="cancel-btn" type="button" class="btn btn-outline-light btn-sm">${dict.btn_cancel}</button>
+                        </div>
+                      </div>
+                      <div id="edit-message" class="mt-2 small text-warning"></div>
+                    </div>
+                    <div class="post-details-card mt-4">
+                      <h1 class="h4 mb-2">${post.title || 'Paylaşım'}</h1>
+                      <p class="text-body-secondary mb-2">${new Date(post.created_at).toLocaleDateString(locale)}</p>
+                      <p class="mb-3">${post.description || ''}</p>
+                      <div class="fw-semibold mb-2">${dict.label_details}</div>
+                      <div class="row g-3">
+                        <div class="col-md-6">
+                          <strong>${dict.label_brand}:</strong> ${post.car_brand || '-'}
+                        </div>
+                        <div class="col-md-6">
+                          <strong>${dict.label_model}:</strong> ${post.car_model || '-'}
+                        </div>
+                        <div class="col-md-6">
+                          <strong>${dict.label_year}:</strong> ${post.car_year || '-'}
+                        </div>
+                        <div class="col-md-6">
+                          <strong>${dict.label_color}:</strong> ${post.car_color || '-'}
+                        </div>
+                        <div class="col-md-6">
+                          <strong>${dict.label_part}:</strong> ${post.part_type || '-'}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="post-details-card mt-3">
+                      <div class="d-flex align-items-center justify-content-between">
+                        <div class="fw-semibold">${dict.label_price}</div>
+                        <div class="h5 mb-0">${post.price !== null && post.price !== undefined ? `${post.price} ${post.price_currency || ''}`.trim() : '-'}</div>
+                      </div>
+                    </div>
+                    <div class="mt-3">
+                      <button id="call-btn" type="button" class="btn btn-success btn-sm w-100">${dict.btn_call}</button>
+                      <div id="call-number" class="text-center mt-2 d-none">
+                        <a class="text-white text-decoration-none" href="tel:${post.user_phone || ''}">${post.user_phone || '-'}</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+          document.querySelectorAll('.blur-reveal').forEach((el) => {
+            el.addEventListener('click', () => {
+              el.classList.toggle('revealed');
+            });
+          });
+
+          const currentUserRaw = localStorage.getItem('currentUser');
+          if (currentUserRaw) {
+            const currentUser = JSON.parse(currentUserRaw);
+            const controls = document.getElementById('edit-controls');
+            if (controls && currentUser.email && currentUser.email === post.user_email) {
+              controls.classList.remove('d-none');
+            }
+            fetch(`/api/profile?email=${encodeURIComponent(currentUser.email)}`)
+              .then((res) => res.json().then((data) => ({ ok: res.ok, data })))
+              .then(({ ok, data }) => {
+                if (!ok) return;
+                const isAdmin = data.user && String(data.user.role).toLowerCase() === 'admin';
+                if (controls && isAdmin) {
+                  controls.classList.remove('d-none');
+                }
+              })
+              .catch(() => {});
+          }
+
+          const editBtn = document.getElementById('edit-btn');
+          const editForm = document.getElementById('edit-form');
+          const editMsg = document.getElementById('edit-message');
+          if (editBtn && editForm) {
+            editBtn.addEventListener('click', () => {
+              editForm.hidden = !editForm.hidden;
+            });
+          }
+
+          const saveBtn = document.getElementById('save-btn');
+          const cancelBtn = document.getElementById('cancel-btn');
+          const deleteBtn = document.getElementById('delete-btn');
+          if (cancelBtn && editForm) {
+            cancelBtn.addEventListener('click', () => {
+              editForm.hidden = true;
+            });
+          }
+          if (saveBtn) {
+            saveBtn.addEventListener('click', async (e) => {
+              e.preventDefault();
+              const currentUserRaw = localStorage.getItem('currentUser');
+              if (!currentUserRaw) return;
+              const currentUser = JSON.parse(currentUserRaw);
+              const payload = {
+                email: currentUser.email,
+                title: document.getElementById('edit-title')?.value || '',
+                description: document.getElementById('edit-desc')?.value || '',
+                part_type: document.getElementById('edit-part')?.value || '',
+                car_brand: document.getElementById('edit-brand')?.value || '',
+                car_model: document.getElementById('edit-model')?.value || '',
+                car_year: document.getElementById('edit-year')?.value || '',
+                car_color: document.getElementById('edit-color')?.value || '',
+                price: document.getElementById('edit-price')?.value || '',
+                price_currency: document.getElementById('edit-currency')?.value || ''
+              };
+              try {
+                const response = await fetch(`/api/posts/${id}`, {
+                  method: 'PUT',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(payload)
+                });
+                const data = await response.json();
+                if (!response.ok) {
+                  editMsg.textContent = data.error || dict.msg_update_error;
+                  editMsg.className = 'mt-2 small text-danger';
+                  return;
+                }
+                editMsg.textContent = dict.msg_update_success;
+                editMsg.className = 'mt-2 small text-success';
+                setTimeout(() => window.location.reload(), 600);
+              } catch {
+                editMsg.textContent = dict.msg_update_error;
+                editMsg.className = 'mt-2 small text-danger';
+              }
+            });
+          }
+          if (deleteBtn) {
+            deleteBtn.addEventListener('click', async () => {
+              const ok = window.confirm(dict.msg_delete_confirm);
+              if (!ok) return;
+              const currentUserRaw = localStorage.getItem('currentUser');
+              if (!currentUserRaw) return;
+              const currentUser = JSON.parse(currentUserRaw);
+              try {
+                const response = await fetch(`/api/posts/${id}`, {
+                  method: 'DELETE',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ email: currentUser.email })
+                });
+                const data = await response.json();
+                if (!response.ok) {
+                  editMsg.textContent = data.error || dict.msg_delete_error;
+                  editMsg.className = 'mt-2 small text-danger';
+                  return;
+                }
+                editMsg.textContent = dict.msg_delete_success;
+                editMsg.className = 'mt-2 small text-success';
+                setTimeout(() => window.location.href = './index.html', 700);
+              } catch {
+                editMsg.textContent = dict.msg_delete_error;
+                editMsg.className = 'mt-2 small text-danger';
+              }
+            });
+          }
+          const editCurrency = document.getElementById('edit-currency');
+          if (editCurrency && post.price_currency) {
+            editCurrency.value = post.price_currency;
+          }
+
+          const partSelect = document.getElementById('edit-part');
+          const brandSelect = document.getElementById('edit-brand');
+          const modelSelect = document.getElementById('edit-model');
+          const yearSelect = document.getElementById('edit-year');
+          const colorSelect = document.getElementById('edit-color');
+
+          const baseColors = ['Ağ','Qara','Gümüş','Boz','Qırmızı','Mavi','Yaşıl','Sarı','Qəhvəyi','Bej','Narıncı','Bənövşəyi','Bordo','Göy','Şampan','Turkuaz'];
+          const addOption = (select, value, label, selected) => {
+            const opt = document.createElement('option');
+            opt.value = value;
+            opt.textContent = label;
+            if (selected) opt.selected = true;
+            select.appendChild(opt);
+          };
+          const fillYear = () => {
+            yearSelect.innerHTML = '';
+            for (let y = 1995; y <= 2026; y += 1) {
+              addOption(yearSelect, String(y), String(y), String(post.car_year) === String(y));
+            }
+          };
+          const fillColors = (colors) => {
+            colorSelect.innerHTML = '';
+            colors.forEach((c) => addOption(colorSelect, c, c, c === post.car_color));
+            if (!colors.includes(post.car_color) && post.car_color) {
+              addOption(colorSelect, post.car_color, post.car_color, true);
+            }
+          };
+
+          // Parts
+          fetch('/api/parts')
+            .then((res) => res.json())
+            .then((data) => {
+              const parts = data.parts || [];
+              partSelect.innerHTML = '';
+              const names = Array.from(new Set(parts.map((p) => p.name)));
+              names.forEach((name) => addOption(partSelect, name, name, name === post.part_type));
+              if (post.part_type && !names.includes(post.part_type)) {
+                addOption(partSelect, post.part_type, post.part_type, true);
+              }
+            })
+            .catch(() => {
+              partSelect.innerHTML = '';
+              if (post.part_type) addOption(partSelect, post.part_type, post.part_type, true);
+            });
+
+          // Cars
+          let carsData = [];
+          let modelsData = [];
+          fetch('/api/cars/models')
+            .then((res) => res.json())
+            .then((data) => {
+              modelsData = data.models || [];
+              const brands = Array.from(new Set(modelsData.map((c) => c.brand)));
+              brandSelect.innerHTML = '';
+              brands.forEach((b) => addOption(brandSelect, b, b, b === post.car_brand));
+              if (post.car_brand && !brands.includes(post.car_brand)) {
+                addOption(brandSelect, post.car_brand, post.car_brand, true);
+              }
+              const modelList = modelsData.filter((c) => c.brand === brandSelect.value).map((c) => c.model);
+              const uniqModels = Array.from(new Set(modelList));
+              modelSelect.innerHTML = '';
+              uniqModels.forEach((m) => addOption(modelSelect, m, m, m === post.car_model));
+              if (post.car_model && !uniqModels.includes(post.car_model)) {
+                addOption(modelSelect, post.car_model, post.car_model, true);
+              }
+            })
+            .catch(() => {});
+
+          fetch('/api/cars')
+            .then((res) => res.json())
+            .then((data) => {
+              carsData = data.cars || [];
+              fillYear();
+              const filtered = carsData.filter((c) => c.brand === post.car_brand && c.model === post.car_model);
+              const colors = Array.from(new Set(baseColors.concat(filtered.map((c) => c.color))));
+              fillColors(colors);
+            })
+            .catch(() => {
+              fillYear();
+              fillColors(baseColors);
+            });
+
+          brandSelect.addEventListener('change', () => {
+            const brand = brandSelect.value;
+            const modelList = modelsData.filter((c) => c.brand === brand).map((c) => c.model);
+            const uniqModels = Array.from(new Set(modelList));
+            modelSelect.innerHTML = '';
+            uniqModels.forEach((m) => addOption(modelSelect, m, m, m === post.car_model));
+            const filtered = carsData.filter((c) => c.brand === brand && c.model === modelSelect.value);
+            const colors = Array.from(new Set(baseColors.concat(filtered.map((c) => c.color))));
+            fillColors(colors);
+          });
+          modelSelect.addEventListener('change', () => {
+            const filtered = carsData.filter((c) => c.brand === brandSelect.value && c.model === modelSelect.value);
+            const colors = Array.from(new Set(baseColors.concat(filtered.map((c) => c.color))));
+            fillColors(colors);
+          });
+
+          const callBtn = document.getElementById('call-btn');
+          const callNumber = document.getElementById('call-number');
+          if (callBtn && callNumber) {
+            callBtn.addEventListener('click', () => {
+              callNumber.classList.toggle('d-none');
+            });
+          }
+        })
+        .catch(() => {
+          container.innerHTML = `<p class="text-danger">${dict.server_error}</p>`;
+        });
+    }
+  </script>
+</body>
+
+</html>

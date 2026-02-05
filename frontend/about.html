@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="az">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haqqımızda | AutoDetail.az</title>
+  <link href="./style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body class="text-bg-dark d-flex flex-column min-vh-100">
+  <header class="p-3 text-bg-dark">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+            <use xlink:href="#bootstrap"></use>
+          </svg>
+        </a>
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li class="maşın-logo"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-car-front-fill" viewBox="0 0 16 16">
+              <path
+                d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z" />
+            </svg></li>
+          <li><a href="./index.html" class="nav-link px-2 text-white" data-i18n="nav_home">Home</a></li>
+          <li><a href="./contact.html" class="nav-link px-2 text-white" data-i18n="nav_contact">Contact</a></li>
+          <li><a href="./profile.html" class="nav-link px-2 text-white" data-i18n="nav_profile">Profil</a></li>
+          <li><a href="./about.html" class="nav-link px-2 text-secondary" data-i18n="nav_about">About</a></li>
+          <li><a href="./admin.html" class="nav-link px-2 text-white admin-only d-none">Admin</a></li>
+        </ul>
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+          <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="search.."
+            aria-label="Search">
+        </form>
+        <div class="language-switcher ms-lg-2 me-lg-3">
+          <button type="button" class="btn btn-outline-light btn-sm lang-btn" data-lang="az">🇦🇿</button>
+          <button type="button" class="btn btn-outline-light btn-sm lang-btn" data-lang="en">🇬🇧</button>
+          <button type="button" class="btn btn-outline-light btn-sm lang-btn" data-lang="ru">🇷🇺</button>
+        </div>
+        <div class="add-post-center">
+          <button id="add-post-btn" type="button" class="btn btn-warning btn-sm">+</button>
+        </div>
+        <div class="text-end">
+          <div id="auth-guest" class="d-inline">
+            <a href="./register.html" class="btn btn-outline-light me-2" data-i18n="btn_register">Qeydiyyat</a>
+            <a href="./login.html" class="btn btn-warning" data-i18n="btn_login">Daxil ol</a>
+          </div>
+          <div id="auth-user" class="d-none align-items-center gap-2">
+            <a href="./profile.html" class="text-white text-decoration-none" aria-label="Profil">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
+                class="bi bi-person-circle" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                <path fill-rule="evenodd"
+                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37c.69-1.19 1.77-2.27 3.24-2.27h4.457c1.47 0 2.55 1.08 3.24 2.27A7 7 0 0 0 8 1" />
+              </svg>
+            </a>
+            <button id="logout-btn" type="button" class="btn btn-outline-light btn-sm" data-i18n="btn_logout">Log out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <hr class="border-light border-2 opacity-75 my-0">
+
+  <main class="container py-5 flex-grow-1">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card bg-dark text-white border-light shadow-lg">
+          <div class="card-body p-4 p-md-5">
+            <h1 class="h3 mb-4" data-i18n="about_title">Haqqımızda</h1>
+            <p class="lead" data-i18n="about_p1">
+              AutoDetails.az 19 yaşında bir gəncin təkbaşına ərsəyə gətirdiyi, avtomobil sahəsində real bir ehtiyacdan
+              doğan layihədir. Peşəkar iddiamız olmasa da, bu platformanı hər gün daha yaxşı etmək üçün daim üzərimizdə
+              işləyirik və inkişaf etdiririk.
+            </p>
+            <p class="lead" data-i18n="about_p2">
+              Əsas məqsədimiz “zapçast tapılmır” problemini aradan qaldırmaq, ustalar üçün yeni gəlir imkanları yaratmaq
+              və müştəriləri saatlarla axtarış edib fiziki olaraq yorulmaq dərdindən xilas etməkdir. AutoDetails.az
+              avtomobil ehtiyat hissələri və xidmətlərini daha rahat, daha əlçatan və daha sürətli hala gətirməyi
+              hədəfləyir.
+            </p>
+            <p class="lead" data-i18n="about_p3">
+              Biz yeniliklərə açığıq, gələn fikirləri dəyərləndiririk və təkliflərə, əməkdaşlıqlara hər zaman açığıq.
+              Əgər bu sahədə birlikdə nəsə daha yaxşı edə biləcəyimizi düşünürsünüzsə, əlaqə saxlamaqdan çəkinməyin.
+            </p>
+            <div class="mt-4">
+              <a href="./contact.html" class="btn btn-warning" data-i18n="about_contact_btn">Əlaqə saxla</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <hr class="border-light border-2 opacity-75 my-0">
+  <footer class="bg-dark text-white py-3 mt-auto">
+    <div class="container">
+      <ul class="nav justify-content-center border-bottom pb-0 mb-0">
+        <li class="nav-item"><a href="./index.html" class="nav-link px-2 text-white" data-i18n="nav_home">Home</a></li>
+        <li class="nav-item"><a href="./contact.html" class="nav-link px-2 text-white" data-i18n="nav_contact">Contact</a></li>
+        <li class="nav-item"><a href="./profile.html" class="nav-link px-2 text-white" data-i18n="nav_profile">Profil</a></li>
+        <li class="nav-item"><a href="./about.html" class="nav-link px-2 text-white" data-i18n="nav_about">About</a></li>
+      </ul>
+      <p class="text-center mb-0">© 2026 AutoDetail.az</p>
+    </div>
+  </footer>
+
+  <script>
+    const translations = {
+      az: {
+        nav_home: 'Ana səhifə',
+        nav_contact: 'Əlaqə',
+        nav_profile: 'Profil',
+        nav_about: 'Haqqımızda',
+        btn_register: 'Qeydiyyat',
+        btn_login: 'Daxil ol',
+        btn_logout: 'Çıxış',
+        about_title: 'Haqqımızda',
+        about_p1: 'AutoDetails.az 19 yaşında bir gəncin təkbaşına ərsəyə gətirdiyi, avtomobil sahəsində real bir ehtiyacdan doğan layihədir. Peşəkar iddiamız olmasa da, bu platformanı hər gün daha yaxşı etmək üçün daim üzərimizdə işləyirik və inkişaf etdiririk.',
+        about_p2: 'Əsas məqsədimiz “zapçast tapılmır” problemini aradan qaldırmaq, ustalar üçün yeni gəlir imkanları yaratmaq və müştəriləri saatlarla axtarış edib fiziki olaraq yorulmaq dərdindən xilas etməkdir. AutoDetails.az avtomobil ehtiyat hissələri və xidmətlərini daha rahat, daha əlçatan və daha sürətli hala gətirməyi hədəfləyir.',
+        about_p3: 'Biz yeniliklərə açığıq, gələn fikirləri dəyərləndiririk və təkliflərə, əməkdaşlıqlara hər zaman açığıq. Əgər bu sahədə birlikdə nəsə daha yaxşı edə biləcəyimizi düşünürsünüzsə, əlaqə saxlamaqdan çəkinməyin.',
+        about_contact_btn: 'Əlaqə saxla',
+        search_frames: ['Axtar', 'Axtar.', 'Axtar..', 'Axtar...']
+      },
+      en: {
+        nav_home: 'Home',
+        nav_contact: 'Contact',
+        nav_profile: 'Profile',
+        nav_about: 'About',
+        btn_register: 'Register',
+        btn_login: 'Log in',
+        btn_logout: 'Log out',
+        about_title: 'About Us',
+        about_p1: 'AutoDetails.az is a project created by a 19-year-old young person, born from a real need in the automotive field. While we do not claim to be professional, we work on this platform every day to make it better and keep improving it.',
+        about_p2: 'Our main goal is to eliminate the “parts not found” problem, create new income opportunities for mechanics, and save customers from hours of searching and physical fatigue. AutoDetails.az aims to make auto parts and services more convenient, more accessible, and faster.',
+        about_p3: 'We are open to innovation, we value incoming ideas, and we are always open to suggestions and collaborations. If you think we can build something better together in this field, do not hesitate to contact us.',
+        about_contact_btn: 'Contact us',
+        search_frames: ['Search', 'Search.', 'Search..', 'Search...']
+      },
+      ru: {
+        nav_home: 'Главная',
+        nav_contact: 'Контакт',
+        nav_profile: 'Профиль',
+        nav_about: 'О нас',
+        btn_register: 'Регистрация',
+        btn_login: 'Войти',
+        btn_logout: 'Выйти',
+        about_title: 'О нас',
+        about_p1: 'AutoDetails.az — проект, созданный 19‑летним молодым человеком и возникший из реальной потребности в автомобильной сфере. Хотя мы не заявляем о профессиональном уровне, мы каждый день работаем над тем, чтобы сделать платформу лучше и развивать её.',
+        about_p2: 'Наша главная цель — устранить проблему «запчасти не находятся», создать новые возможности дохода для мастеров и избавить клиентов от часов поиска и физической усталости. AutoDetails.az стремится сделать автозапчасти и услуги более удобными, доступными и быстрыми.',
+        about_p3: 'Мы открыты к инновациям, ценим идеи и всегда готовы к предложениям и сотрудничеству. Если вы думаете, что мы можем сделать что-то лучше вместе, не стесняйтесь связаться с нами.',
+        about_contact_btn: 'Связаться',
+        search_frames: ['Поиск', 'Поиск.', 'Поиск..', 'Поиск...']
+      }
+    };
+
+    let currentLang = localStorage.getItem('siteLang') || 'az';
+
+    const applyTranslations = () => {
+      const dict = translations[currentLang] || translations.az;
+      document.documentElement.lang = currentLang;
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          el.textContent = dict[key];
+        }
+      });
+      startSearchAnimation(dict.search_frames || translations.az.search_frames);
+    };
+
+    let searchTimer;
+    const startSearchAnimation = (frames) => {
+      const searchInput = document.querySelector('input[type="search"]');
+      if (!searchInput) {
+        return;
+      }
+      if (searchTimer) {
+        clearInterval(searchTimer);
+      }
+      let i = 0;
+      searchTimer = setInterval(() => {
+        searchInput.setAttribute('placeholder', frames[i % frames.length]);
+        i += 1;
+      }, 500);
+    };
+
+    document.querySelectorAll('.lang-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        currentLang = btn.dataset.lang;
+        localStorage.setItem('siteLang', currentLang);
+        applyTranslations();
+      });
+    });
+
+    const addPostBtn = document.getElementById('add-post-btn');
+    if (addPostBtn) {
+      addPostBtn.addEventListener('click', () => {
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) {
+          window.location.href = './login.html';
+          return;
+        }
+        window.location.href = './add-post.html';
+      });
+    }
+
+    const guestEl = document.getElementById('auth-guest');
+    const userEl = document.getElementById('auth-user');
+    const logoutBtn = document.getElementById('logout-btn');
+    const currentUser = localStorage.getItem('currentUser');
+
+    if (currentUser) {
+      guestEl.classList.add('d-none');
+      userEl.classList.remove('d-none');
+      userEl.classList.add('d-inline-flex');
+    }
+
+    const adminLinks = document.querySelectorAll('.admin-only');
+    if (currentUser) {
+      const email = JSON.parse(currentUser).email;
+      fetch(`/api/profile?email=${encodeURIComponent(email)}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.user && String(data.user.role).toLowerCase() === 'admin') {
+            adminLinks.forEach((el) => el.classList.remove('d-none'));
+          }
+        })
+        .catch(() => {});
+    }
+
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('currentUser');
+        window.location.href = './index.html';
+      });
+    }
+
+    applyTranslations();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

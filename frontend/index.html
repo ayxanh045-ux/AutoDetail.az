@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoDetail.az</title>
+  <link href="./style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+  <header class="p-3 text-bg-dark">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"> <a href="/"
+          class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"> <svg class="bi me-2"
+            width="40" height="32" role="img" aria-label="Bootstrap">
+            <use xlink:href="#bootstrap"></use>
+          </svg> </a>
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li class="maşın-logo"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-car-front-fill" viewBox="0 0 16 16">
+              <path
+                d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z" />
+            </svg></li>
+          <li><a href="./index.html" class="nav-link px-2 text-secondary" data-i18n="nav_home">Home</a></li>
+          <li><a href="./Contact.html" class="nav-link px-2 text-white" data-i18n="nav_contact">Contact</a></li>
+          <li><a href="./profile.html" class="nav-link px-2 text-white" data-i18n="nav_profile">Profil</a></li>
+          <li><a href="./about.html" class="nav-link px-2 text-white" data-i18n="nav_about">About</a></li>
+          <li><a href="./admin.html" class="nav-link px-2 text-white admin-only d-none">Admin</a></li>
+        </ul>
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+          <input id="header-search" type="search" class="form-control form-control-dark text-bg-dark" placeholder="search.."
+            aria-label="Search">
+        </form>
+        <div class="language-switcher ms-lg-2 me-lg-3">
+          <button type="button" class="btn btn-outline-light btn-sm lang-btn" data-lang="az">🇦🇿</button>
+          <button type="button" class="btn btn-outline-light btn-sm lang-btn" data-lang="en">🇬🇧</button>
+          <button type="button" class="btn btn-outline-light btn-sm lang-btn" data-lang="ru">🇷🇺</button>
+        </div>
+        <div class="add-post-center">
+          <button id="add-post-btn" type="button" class="btn btn-warning btn-sm">+</button>
+        </div>
+        <div class="text-end">
+          <div id="auth-guest" class="d-inline">
+            <a href="./register.html" class="btn btn-outline-light me-2" data-i18n="btn_register">Qeydiyyat</a>
+            <a href="./login.html" class="btn btn-warning" data-i18n="btn_login">Daxil ol</a>
+          </div>
+          <div id="auth-user" class="d-none align-items-center gap-2">
+            <a href="./profile.html" class="text-white text-decoration-none" aria-label="Profil">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
+                class="bi bi-person-circle" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                <path fill-rule="evenodd"
+                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37c.69-1.19 1.77-2.27 3.24-2.27h4.457c1.47 0 2.55 1.08 3.24 2.27A7 7 0 0 0 8 1" />
+              </svg>
+            </a>
+            <button id="logout-btn" type="button" class="btn btn-outline-light btn-sm" data-i18n="btn_logout">Log out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <hr class="border-light border-2 opacity-75 my-0">
+  <div class="container my-3 filter-bar">
+    <div class="row g-2">
+      <div class="col-md-3"><input id="filter-brand" class="form-control" placeholder="Brand"></div>
+      <div class="col-md-3"><input id="filter-model" class="form-control" placeholder="Model"></div>
+      <div class="col-md-2"><input id="filter-year" class="form-control" placeholder="Year"></div>
+      <div class="col-md-2"><input id="filter-color" class="form-control" placeholder="Color"></div>
+      <div class="col-md-2"><button id="filter-clear" class="btn btn-warning w-100">Clear</button></div>
+    </div>
+    <div class="row g-2 mt-3">
+      <div class="col-md-10">
+        <input id="filter-part" class="form-control" list="part-suggestions" placeholder="Ehtiyat hissəsi">
+        <datalist id="part-suggestions"></datalist>
+      </div>
+      <div class="col-md-2"><button id="filter-part-clear" class="btn btn-warning w-100">Clear</button></div>
+    </div>
+  </div>
+  <div class="container my-5 flex-grow-1">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+      <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+        <h1 class="display-4 fw-bold lh-1 text-body-emphasis" data-i18n="hero_title">Maşınınız üçün bütün detallar bir saytda.</h1>
+        <p class="lead" data-i18n="hero_lead">Artıq uzun yollar qət edib maşınınz üçün ideal detal axtarmağınıza ehtiyac yoxdur.Elə indi
+          sadəcə AutoDetail.az saytına daxil olun və istədiyiniz detalı,ustanı müştəri rəyləri ilə qiymətləndirin və
+          könül rahatlıqı ilə alış-veriş edin.</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+          <a href="./login.html" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold" data-i18n="hero_login">Daxil ol</a>
+          <a href="./register.html" class="btn btn-outline-secondary btn-lg px-4" data-i18n="hero_register">Qeydiyyat</a>
+        </div>
+      </div>
+      <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg changan_car"> <img
+          src="./assets/images/ChatGPT Image Feb 4, 2026, 09_40_20 PM.png"
+          class="img-fluid w-100 h-100 object-fit-cover" alt="changan_car_[hoto]"> </div>
+    </div>
+  </div>
+  <div class="container sekilo mb-10 flex-grow-1">
+    <div id="posts-grid" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"></div>
+  </div>
+
+  <hr class="border-light border-2 opacity-75 my-0">
+  <footer class="bg-dark text-white py-3 mt-auto">
+    <div class="container">
+
+      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li class="nav-item"><a href="./index.html" class="nav-link px-2 text-white" data-i18n="nav_home">Home</a></li>
+        <li class="nav-item"><a href="./contact.html" class="nav-link px-2 text-white" data-i18n="nav_contact">Contact</a></li>
+        <li class="nav-item"><a href="./profile.html" class="nav-link px-2 text-white" data-i18n="nav_profile">Profil</a></li>
+        <li class="nav-item"><a href="./about.html" class="nav-link px-2 text-white" data-i18n="nav_about">About</a></li>
+      </ul>
+
+      <p class="text-center mb-0">© 2026 AutoDetail.az</p>
+
+    </div>
+  </footer>
+
+
+  <script>
+    const translations = {
+      az: {
+        nav_home: 'Ana səhifə',
+        nav_contact: 'Əlaqə',
+        nav_details: 'Detallar',
+        nav_profile: 'Profil',
+        nav_about: 'Haqqımızda',
+        btn_register: 'Qeydiyyat',
+        btn_login: 'Daxil ol',
+        btn_logout: 'Çıxış',
+        hero_title: 'Maşınınız üçün bütün detallar bir saytda.',
+        hero_lead: 'Artıq uzun yollar qət edib maşınınz üçün ideal detal axtarmağınıza ehtiyac yoxdur.Elə indi sadəcə AutoDetail.az saytına daxil olun və istədiyiniz detalı,ustanı müştəri rəyləri ilə qiymətləndirin və könül rahatlıqı ilə alış-veriş edin.',
+        hero_login: 'Daxil ol',
+        hero_register: 'Qeydiyyat',
+        card_text: 'Bu kartda əlavə məlumatlar üçün qısa təsvir yerləşir. Məzmun bir qədər uzundur.',
+        btn_view: 'Bax',
+        btn_edit: 'Redaktə',
+        thumb: 'Miniatür',
+        search_frames: ['Axtar', 'Axtar.', 'Axtar..', 'Axtar...']
+      },
+      en: {
+        nav_home: 'Home',
+        nav_contact: 'Contact',
+        nav_details: 'Details',
+        nav_profile: 'Profile',
+        nav_about: 'About',
+        btn_register: 'Register',
+        btn_login: 'Log in',
+        btn_logout: 'Log out',
+        hero_title: 'All details for your car in one place.',
+        hero_lead: 'No more long trips to find the perfect part for your car. Enter AutoDetail.az now, review parts and services with customer feedback, and shop with confidence.',
+        hero_login: 'Log in',
+        hero_register: 'Register',
+        card_text: 'This card includes short supporting text below as a natural lead-in to additional content.',
+        btn_view: 'View',
+        btn_edit: 'Edit',
+        thumb: 'Thumbnail',
+        search_frames: ['Search', 'Search.', 'Search..', 'Search...']
+      },
+      ru: {
+        nav_home: 'Главная',
+        nav_contact: 'Контакт',
+        nav_details: 'Детали',
+        nav_profile: 'Профиль',
+        nav_about: 'О нас',
+        btn_register: 'Регистрация',
+        btn_login: 'Войти',
+        btn_logout: 'Выйти',
+        hero_title: 'Все детали для вашего автомобиля в одном месте.',
+        hero_lead: 'Больше не нужно ездить в поисках идеальной детали. Заходите на AutoDetail.az, оценивайте детали и сервисы по отзывам и покупайте с уверенностью.',
+        hero_login: 'Войти',
+        hero_register: 'Регистрация',
+        card_text: 'Эта карточка содержит короткий текст с описанием и дополнительной информацией.',
+        btn_view: 'Просмотр',
+        btn_edit: 'Редактировать',
+        thumb: 'Миниатюра',
+        search_frames: ['Поиск', 'Поиск.', 'Поиск..', 'Поиск...']
+      }
+    };
+
+    let currentLang = localStorage.getItem('siteLang') || 'az';
+
+    const applyTranslations = () => {
+      const dict = translations[currentLang] || translations.az;
+      document.documentElement.lang = currentLang;
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          el.textContent = dict[key];
+        }
+      });
+      startSearchAnimation(dict.search_frames || translations.az.search_frames);
+    };
+
+    let searchTimer;
+    const startSearchAnimation = (frames) => {
+      const searchInput = document.querySelector('input[type="search"]');
+      if (!searchInput) {
+        return;
+      }
+      if (searchTimer) {
+        clearInterval(searchTimer);
+      }
+      let i = 0;
+      searchTimer = setInterval(() => {
+        searchInput.setAttribute('placeholder', frames[i % frames.length]);
+        i += 1;
+      }, 500);
+    };
+
+    document.querySelectorAll('.lang-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        currentLang = btn.dataset.lang;
+        localStorage.setItem('siteLang', currentLang);
+        applyTranslations();
+      });
+    });
+
+    const addPostBtn = document.getElementById('add-post-btn');
+    if (addPostBtn) {
+      addPostBtn.addEventListener('click', () => {
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) {
+          window.location.href = './login.html';
+          return;
+        }
+        window.location.href = './add-post.html';
+      });
+    }
+
+    const postsGrid = document.getElementById('posts-grid');
+    const headerSearch = document.getElementById('header-search');
+    const filterBrand = document.getElementById('filter-brand');
+    const filterModel = document.getElementById('filter-model');
+    const filterYear = document.getElementById('filter-year');
+    const filterColor = document.getElementById('filter-color');
+    const filterClear = document.getElementById('filter-clear');
+    const filterPart = document.getElementById('filter-part');
+    const filterPartClear = document.getElementById('filter-part-clear');
+    const partSuggestions = document.getElementById('part-suggestions');
+    let postsCache = [];
+
+    const renderPosts = (posts) => {
+      if (!postsGrid) return;
+      if (!posts || posts.length === 0) {
+        postsGrid.innerHTML = '<div class="col-12 text-body-secondary">Hələ paylaşım yoxdur.</div>';
+        return;
+      }
+      postsGrid.innerHTML = posts
+        .map((post) => {
+          const image = post.image_url
+            ? `<img src="${post.image_url}" class="card-img-top" alt="Paylaşım">`
+            : '';
+          return `
+            <div class="col">
+              <div class="card shadow-sm h-100" style="cursor:pointer" onclick="window.location.href='./post.html?id=${post.id}'">
+                ${image}
+                <div class="card-body">
+                  <h3 class="h6 mb-1">${post.title || 'Paylaşım'}</h3>
+                  <p class="text-body-secondary mb-2">${post.part_type || ''}</p>
+                  <p class="mb-2 fw-semibold">${post.price !== null && post.price !== undefined ? `${post.price} ${post.price_currency || ''}`.trim() : ''}</p>
+                  <p class="mb-0">${post.car_brand || ''} ${post.car_model || ''} ${post.car_year || ''} ${post.car_color || ''}</p>
+                </div>
+              </div>
+            </div>
+          `;
+        })
+        .join('');
+    };
+
+    const applyFilters = () => {
+      const q = (headerSearch?.value || '').trim().toLowerCase();
+      const b = (filterBrand?.value || '').trim().toLowerCase();
+      const m = (filterModel?.value || '').trim().toLowerCase();
+      const y = (filterYear?.value || '').trim().toLowerCase();
+      const c = (filterColor?.value || '').trim().toLowerCase();
+      const p = (filterPart?.value || '').trim().toLowerCase();
+      let list = postsCache.slice();
+      if (q) {
+        list = list.filter((p) =>
+          `${p.title || ''} ${p.part_type || ''} ${p.car_brand || ''} ${p.car_model || ''} ${p.car_year || ''} ${p.car_color || ''}`
+            .toLowerCase()
+            .includes(q)
+        );
+      }
+      if (b) list = list.filter((p) => String(p.car_brand || '').toLowerCase().includes(b));
+      if (m) list = list.filter((p) => String(p.car_model || '').toLowerCase().includes(m));
+      if (y) list = list.filter((p) => String(p.car_year || '').toLowerCase().includes(y));
+      if (c) list = list.filter((p) => String(p.car_color || '').toLowerCase().includes(c));
+      if (p) list = list.filter((p) => String(p.part_type || '').toLowerCase().includes(p));
+      renderPosts(list);
+    };
+
+    fetch('/api/posts')
+      .then((res) => res.json())
+      .then((data) => {
+        postsCache = data.posts || [];
+        renderPosts(postsCache);
+        if (partSuggestions) {
+          const parts = Array.from(new Set(postsCache.map((p) => p.part_type).filter(Boolean)));
+          partSuggestions.innerHTML = parts.map((p) => `<option value="${p}"></option>`).join('');
+        }
+      })
+      .catch(() => {
+        if (postsGrid) {
+          postsGrid.innerHTML = '<div class="col-12 text-danger">Paylaşımları yükləmək olmadı.</div>';
+        }
+      });
+
+    if (headerSearch) headerSearch.addEventListener('input', applyFilters);
+    [filterBrand, filterModel, filterYear, filterColor, filterPart].forEach((el) => {
+      if (el) el.addEventListener('input', applyFilters);
+    });
+    if (filterClear) {
+      filterClear.addEventListener('click', () => {
+        if (filterBrand) filterBrand.value = '';
+        if (filterModel) filterModel.value = '';
+        if (filterYear) filterYear.value = '';
+        if (filterColor) filterColor.value = '';
+        if (headerSearch) headerSearch.value = '';
+        if (filterPart) filterPart.value = '';
+        renderPosts(postsCache);
+      });
+    }
+    if (filterPartClear) {
+      filterPartClear.addEventListener('click', () => {
+        if (filterPart) filterPart.value = '';
+        renderPosts(postsCache);
+      });
+    }
+
+    const guestEl = document.getElementById('auth-guest');
+    const userEl = document.getElementById('auth-user');
+    const logoutBtn = document.getElementById('logout-btn');
+    const currentUser = localStorage.getItem('currentUser');
+
+    if (currentUser) {
+      guestEl.classList.add('d-none');
+      userEl.classList.remove('d-none');
+      userEl.classList.add('d-inline-flex');
+    }
+
+    const adminLinks = document.querySelectorAll('.admin-only');
+    if (currentUser) {
+      const email = JSON.parse(currentUser).email;
+      fetch(`/api/profile?email=${encodeURIComponent(email)}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.user && String(data.user.role).toLowerCase() === 'admin') {
+            adminLinks.forEach((el) => el.classList.remove('d-none'));
+          }
+        })
+        .catch(() => {});
+    }
+
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('currentUser');
+        window.location.href = './index.html';
+      });
+    }
+
+    applyTranslations();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</html>

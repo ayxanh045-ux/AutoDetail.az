@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="az">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yeni Paylaşım | AutoDetail.az</title>
+  <link href="./style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body class="text-bg-dark d-flex flex-column min-vh-100">
+  <header class="p-3 text-bg-dark">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+            <use xlink:href="#bootstrap"></use>
+          </svg>
+        </a>
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li class="maşın-logo"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-car-front-fill" viewBox="0 0 16 16">
+              <path
+                d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z" />
+            </svg></li>
+          <li><a href="./index.html" class="nav-link px-2 text-white">Home</a></li>
+          <li><a href="./contact.html" class="nav-link px-2 text-white">Contact</a></li>
+          <li><a href="./profile.html" class="nav-link px-2 text-white">Profil</a></li>
+          <li><a href="./about.html" class="nav-link px-2 text-white">About</a></li>
+          <li><a href="./admin.html" class="nav-link px-2 text-white admin-only d-none">Admin</a></li>
+        </ul>
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+          <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="search.."
+            aria-label="Search">
+        </form>
+        <div class="language-switcher ms-lg-2 me-lg-3">
+          <button type="button" class="btn btn-outline-light btn-sm lang-btn" data-lang="az">🇦🇿</button>
+          <button type="button" class="btn btn-outline-light btn-sm lang-btn" data-lang="en">🇬🇧</button>
+          <button type="button" class="btn btn-outline-light btn-sm lang-btn" data-lang="ru">🇷🇺</button>
+        </div>
+        <div class="add-post-center">
+          <button id="add-post-btn" type="button" class="btn btn-warning btn-sm">+</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <hr class="border-light border-2 opacity-75 my-0">
+
+  <main class="container py-5 flex-grow-1">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+        <div class="card bg-dark text-white border-light shadow-lg">
+          <div class="card-body p-4">
+            <h1 class="h4 mb-3" data-i18n="add_title">Yeni paylaşım</h1>
+            <form>
+              <div class="mb-3">
+                <label class="form-label" for="car-brand" data-i18n="label_brand">Maşının markası</label>
+                <select class="form-select" id="car-brand" required>
+                  <option value=\"\">Seçin...</option>
+                  <option value=\"__other__\">Digər</option>
+                </select>
+                <div id="other-brand-wrap" class="mt-2 d-none">
+                  <input class="form-control" id="other-brand" type="text" placeholder="Məs: Skoda" />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="car-model" data-i18n="label_model">Maşının modeli</label>
+                <select class="form-select" id="car-model" required>
+                  <option value=\"\">Seçin...</option>
+                  <option value=\"__other__\">Digər</option>
+                </select>
+                <div id="other-model-wrap" class="mt-2 d-none">
+                  <input class="form-control" id="other-model" type="text" placeholder="Məs: Octavia" />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="car-year" data-i18n="label_year">Maşının ili</label>
+                <select class="form-select" id="car-year" required>
+                  <option value=\"\">Seçin...</option>
+                  <option value=\"__other__\">Digər</option>
+                </select>
+                <div id="other-year-wrap" class="mt-2 d-none">
+                  <input class="form-control" id="other-year" type="number" min="1970" max="2026" placeholder="Məs: 2019" />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="car-color" data-i18n="label_color">Rəng</label>
+                <select class="form-select" id="car-color" required>
+                  <option value=\"\">Seçin...</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="part-category" data-i18n="label_part_category">Ehtiyat hissəsinin bölməsi</label>
+                <select class="form-select" id="part-category" required>
+                  <option value=\"\">Seçin...</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="part-type" data-i18n="label_part_type">Ehtiyat hissəsinin növü</label>
+                <select class="form-select" id="part-type" required>
+                  <option value=\"\">Seçin...</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="post-title" data-i18n="label_title">Başlıq</label>
+                <input class="form-control" id="post-title" type="text" placeholder="Məs: Ehtiyat hissə" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="post-image" data-i18n="label_image">Şəkil</label>
+                <input class="form-control" id="post-image" type="file" accept="image/*" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="post-price" data-i18n="label_price">Qiymət</label>
+                <input class="form-control" id="post-price" type="number" step="0.01" min="0" placeholder="0.00" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="post-price-currency" data-i18n="label_currency">Valyuta</label>
+                <select class="form-select" id="post-price-currency">
+                  <option value="AZN">Manat</option>
+                  <option value="USD">Dollar</option>
+                  <option value="EUR">Euro</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="post-desc" data-i18n="label_desc">Məlumat</label>
+                <textarea class="form-control" id="post-desc" rows="4"
+                  placeholder="Müştəri üçün məlumatı yazın..."></textarea>
+              </div>
+              <div class="d-grid">
+                <button id="submit-post" class="btn btn-warning" type="button" data-i18n="btn_submit">Paylaş</button>
+              </div>
+              <div id="post-message" class="mt-3"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <hr class="border-light border-2 opacity-75 my-0">
+  <footer class="bg-dark text-white py-3 mt-auto">
+    <div class="container">
+      <ul class="nav justify-content-center border-bottom pb-0 mb-0">
+        <li class="nav-item"><a href="./index.html" class="nav-link px-2 text-white">Home</a></li>
+        <li class="nav-item"><a href="./contact.html" class="nav-link px-2 text-white">Contact</a></li>
+        <li class="nav-item"><a href="./profile.html" class="nav-link px-2 text-white">Profil</a></li>
+        <li class="nav-item"><a href="./about.html" class="nav-link px-2 text-white">About</a></li>
+      </ul>
+      <p class="text-center mb-0">© 2026 AutoDetail.az</p>
+    </div>
+  </footer>
+
+  <script>
+    const translations = {
+      az: {
+        add_title: 'Yeni paylaşım',
+        label_brand: 'Maşının markası',
+        label_model: 'Maşının modeli',
+        label_year: 'Maşının ili',
+        label_color: 'Rəng',
+        other_option: 'Digər',
+        other_placeholder_brand: 'Məs: Skoda',
+        other_placeholder_model: 'Məs: Octavia',
+        other_placeholder_year: 'Məs: 2019',
+        label_part_category: 'Ehtiyat hissəsinin bölməsi',
+        label_part_type: 'Ehtiyat hissəsinin növü',
+        label_title: 'Başlıq',
+        label_image: 'Şəkil',
+        label_desc: 'Məlumat',
+        label_price: 'Qiymət',
+        label_currency: 'Valyuta',
+        btn_submit: 'Paylaş',
+        msg_fill: 'Zəhmət olmasa bütün sahələri doldurun.',
+        msg_error: 'Xəta baş verdi.',
+        msg_server: 'Serverə qoşulmaq olmadı.',
+        select_placeholder: 'Seçin...'
+      },
+      en: {
+        add_title: 'New post',
+        label_brand: 'Car brand',
+        label_model: 'Car model',
+        label_year: 'Car year',
+        label_color: 'Color',
+        other_option: 'Other',
+        other_placeholder_brand: 'e.g. Skoda',
+        other_placeholder_model: 'e.g. Octavia',
+        other_placeholder_year: 'e.g. 2019',
+        label_part_category: 'Spare part category',
+        label_part_type: 'Spare part type',
+        label_title: 'Title',
+        label_image: 'Image',
+        label_desc: 'Description',
+        label_price: 'Price',
+        label_currency: 'Currency',
+        btn_submit: 'Post',
+        msg_fill: 'Please fill in all fields.',
+        msg_error: 'Something went wrong.',
+        msg_server: 'Could not connect to server.',
+        select_placeholder: 'Select...'
+      },
+      ru: {
+        add_title: 'Новый пост',
+        label_brand: 'Марка автомобиля',
+        label_model: 'Модель автомобиля',
+        label_year: 'Год выпуска',
+        label_color: 'Цвет',
+        other_option: 'Другое',
+        other_placeholder_brand: 'Напр: Skoda',
+        other_placeholder_model: 'Напр: Octavia',
+        other_placeholder_year: 'Напр: 2019',
+        label_part_category: 'Категория запчасти',
+        label_part_type: 'Тип запчасти',
+        label_title: 'Заголовок',
+        label_image: 'Фото',
+        label_desc: 'Описание',
+        label_price: 'Цена',
+        label_currency: 'Валюта',
+        btn_submit: 'Опубликовать',
+        msg_fill: 'Пожалуйста, заполните все поля.',
+        msg_error: 'Произошла ошибка.',
+        msg_server: 'Не удалось подключиться к серверу.',
+        select_placeholder: 'Выберите...'
+      }
+    };
+
+    let currentLang = localStorage.getItem('siteLang') || 'az';
+    const getOtherLabel = () => {
+      const dict = translations[currentLang] || translations.az;
+      return dict.other_option || 'Digər';
+    };
+    const colorTranslations = {
+      az: {
+        'Ağ': 'Ağ',
+        'Qara': 'Qara',
+        'Gümüş': 'Gümüş',
+        'Boz': 'Boz',
+        'Qırmızı': 'Qırmızı',
+        'Mavi': 'Mavi',
+        'Yaşıl': 'Yaşıl',
+        'Sarı': 'Sarı',
+        'Qəhvəyi': 'Qəhvəyi',
+        'Bej': 'Bej',
+        'Narıncı': 'Narıncı',
+        'Bənövşəyi': 'Bənövşəyi',
+        'Bordo': 'Bordo',
+        'Göy': 'Göy',
+        'Şampan': 'Şampan',
+        'Turkuaz': 'Turkuaz'
+      },
+      en: {
+        'Ağ': 'White',
+        'Qara': 'Black',
+        'Gümüş': 'Silver',
+        'Boz': 'Gray',
+        'Qırmızı': 'Red',
+        'Mavi': 'Blue',
+        'Yaşıl': 'Green',
+        'Sarı': 'Yellow',
+        'Qəhvəyi': 'Brown',
+        'Bej': 'Beige',
+        'Narıncı': 'Orange',
+        'Bənövşəyi': 'Purple',
+        'Bordo': 'Burgundy',
+        'Göy': 'Navy',
+        'Şampan': 'Champagne',
+        'Turkuaz': 'Turquoise'
+      },
+      ru: {
+        'Ağ': 'Белый',
+        'Qara': 'Черный',
+        'Gümüş': 'Серебристый',
+        'Boz': 'Серый',
+        'Qırmızı': 'Красный',
+        'Mavi': 'Синий',
+        'Yaşıl': 'Зелёный',
+        'Sarı': 'Жёлтый',
+        'Qəhvəyi': 'Коричневый',
+        'Bej': 'Бежевый',
+        'Narıncı': 'Оранжевый',
+        'Bənövşəyi': 'Фиолетовый',
+        'Bordo': 'Бордовый',
+        'Göy': 'Тёмно-синий',
+        'Şampan': 'Шампань',
+        'Turkuaz': 'Бирюзовый'
+      }
+    };
+    const baseColors = [
+      'Ağ',
+      'Qara',
+      'Gümüş',
+      'Boz',
+      'Qırmızı',
+      'Mavi',
+      'Yaşıl',
+      'Sarı',
+      'Qəhvəyi',
+      'Bej',
+      'Narıncı',
+      'Bənövşəyi',
+      'Bordo',
+      'Göy',
+      'Şampan',
+      'Turkuaz'
+    ];
+    const getSelectPlaceholder = () => {
+      const dict = translations[currentLang] || translations.az;
+      return dict.select_placeholder || 'Seçin...';
+    };
+    const applyTranslations = () => {
+      const dict = translations[currentLang] || translations.az;
+      document.documentElement.lang = currentLang;
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          el.textContent = dict[key];
+        }
+      });
+    };
+    applyTranslations();
+
+    const addPostBtn = document.getElementById('add-post-btn');
+    if (addPostBtn) {
+      addPostBtn.addEventListener('click', () => {
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) {
+          window.location.href = './login.html';
+          return;
+        }
+      });
+    }
+
+    const adminLinks = document.querySelectorAll('.admin-only');
+    const currentUserForAdmin = localStorage.getItem('currentUser');
+    if (currentUserForAdmin) {
+      const email = JSON.parse(currentUserForAdmin).email;
+      fetch(`/api/profile?email=${encodeURIComponent(email)}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.user && String(data.user.role).toLowerCase() === 'admin') {
+            adminLinks.forEach((el) => el.classList.remove('d-none'));
+          }
+        })
+        .catch(() => {});
+    }
+  </script>
+  <script>
+    const brandSelect = document.getElementById('car-brand');
+    const modelSelect = document.getElementById('car-model');
+    const yearSelect = document.getElementById('car-year');
+    const colorSelect = document.getElementById('car-color');
+    const otherBrandWrap = document.getElementById('other-brand-wrap');
+    const otherModelWrap = document.getElementById('other-model-wrap');
+    const otherYearWrap = document.getElementById('other-year-wrap');
+    const otherBrand = document.getElementById('other-brand');
+    const otherModel = document.getElementById('other-model');
+    const otherYear = document.getElementById('other-year');
+    const submitPost = document.getElementById('submit-post');
+    const messageEl = document.getElementById('post-message');
+    const partCategorySelect = document.getElementById('part-category');
+    const partTypeSelect = document.getElementById('part-type');
+
+    const updateOtherPlaceholders = () => {
+      const dict = translations[currentLang] || translations.az;
+      if (otherBrand) otherBrand.placeholder = dict.other_placeholder_brand || otherBrand.placeholder;
+      if (otherModel) otherModel.placeholder = dict.other_placeholder_model || otherModel.placeholder;
+      if (otherYear) otherYear.placeholder = dict.other_placeholder_year || otherYear.placeholder;
+    };
+
+    updateOtherPlaceholders();
+
+    modelSelect.dataset.animate = '1';
+    colorSelect.dataset.animate = '1';
+
+    const clearOptions = (select) => {
+      select.innerHTML = `<option value=\"\">${getSelectPlaceholder()}</option>`;
+    };
+
+    const unique = (items) => Array.from(new Set(items));
+
+    const formatColorLabel = (value) => {
+      const map = colorTranslations[currentLang] || colorTranslations.az;
+      return map[value] || value;
+    };
+
+    const populateSelect = (select, values, formatter) => {
+      clearOptions(select);
+      if (select !== colorSelect) {
+        const other = document.createElement('option');
+        other.value = '__other__';
+        other.textContent = getOtherLabel();
+        select.appendChild(other);
+      }
+      values.forEach((value) => {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = formatter ? formatter(value) : value;
+        select.appendChild(option);
+      });
+    };
+
+    const updateOtherOption = (select) => {
+      if (!select) return;
+      const other = Array.from(select.options || []).find((opt) => opt.value === '__other__');
+      if (other) {
+        other.textContent = getOtherLabel();
+      }
+    };
+
+    const updateColorOptionLabels = () => {
+      if (!colorSelect) return;
+      Array.from(colorSelect.options || []).forEach((opt) => {
+        if (!opt.value || opt.value === '__other__') return;
+        opt.textContent = formatColorLabel(opt.value);
+      });
+    };
+
+    const updateSelectPlaceholders = () => {
+      [brandSelect, modelSelect, yearSelect, colorSelect, partCategorySelect, partTypeSelect].forEach((select) => {
+        if (!select) return;
+        const firstOption = select.options && select.options[0];
+        if (firstOption && firstOption.value === '') {
+          firstOption.textContent = getSelectPlaceholder();
+        }
+        updateOtherOption(select);
+      });
+      updateColorOptionLabels();
+    };
+
+    const toggleOtherInput = (select, wrap) => {
+      if (!select || !wrap) return;
+      if (select.value === '__other__') {
+        wrap.classList.remove('d-none');
+      } else {
+        wrap.classList.add('d-none');
+      }
+    };
+
+    let carsData = [];
+    let modelsData = [];
+
+    fetch('/api/cars/models')
+      .then((res) => res.json())
+      .then((data) => {
+        modelsData = data.models || [];
+        const brands = unique(modelsData.map((c) => c.brand));
+        populateSelect(brandSelect, brands);
+      })
+      .catch(() => {
+        clearOptions(brandSelect);
+      });
+
+    fetch('/api/cars')
+      .then((res) => res.json())
+      .then((data) => {
+        carsData = data.cars || [];
+        if (!brandSelect.options || brandSelect.options.length <= 1) {
+          const brands = unique(carsData.map((c) => c.brand));
+          populateSelect(brandSelect, brands);
+        }
+      })
+      .catch(() => {});
+
+
+    const populateYearRange = () => {
+      yearSelect.innerHTML = `<option value=\"\">${getSelectPlaceholder()}</option>`;
+      for (let y = 1995; y <= 2026; y += 1) {
+        const option = document.createElement('option');
+        option.value = String(y);
+        option.textContent = String(y);
+        yearSelect.appendChild(option);
+      }
+    };
+
+    populateYearRange();
+
+    brandSelect.addEventListener('change', () => {
+      toggleOtherInput(brandSelect, otherBrandWrap);
+      const brand = brandSelect.value;
+      if (brand === '__other__') {
+        populateSelect(modelSelect, []);
+        populateYearRange();
+        populateSelect(colorSelect, baseColors, formatColorLabel);
+        return;
+      }
+      const modelFiltered = modelsData.filter((c) => c.brand === brand);
+      const models = unique(modelFiltered.map((c) => c.model));
+      if (!models.length) {
+        const fallbackModels = carsData.filter((c) => c.brand === brand).map((c) => c.model);
+        models.push(...unique(fallbackModels));
+      }
+      const filtered = carsData.filter((c) => c.brand === brand);
+      const colors = unique(baseColors.concat(filtered.map((c) => c.color)));
+      populateSelect(modelSelect, models);
+      populateYearRange();
+      populateSelect(colorSelect, colors, formatColorLabel);
+    });
+
+    modelSelect.addEventListener('change', () => {
+      toggleOtherInput(modelSelect, otherModelWrap);
+      const brand = brandSelect.value;
+      const model = modelSelect.value;
+      if (model === '__other__') {
+        populateYearRange();
+        populateSelect(colorSelect, baseColors, formatColorLabel);
+        return;
+      }
+      const filtered = carsData.filter((c) => c.brand === brand && c.model === model);
+      const colors = unique(baseColors.concat(filtered.map((c) => c.color)));
+      populateYearRange();
+      populateSelect(colorSelect, colors, formatColorLabel);
+    });
+
+    yearSelect.addEventListener('change', () => {
+      toggleOtherInput(yearSelect, otherYearWrap);
+      const brand = brandSelect.value;
+      const model = modelSelect.value;
+      const year = Number(yearSelect.value);
+      if (yearSelect.value === '__other__') {
+        populateSelect(colorSelect, baseColors, formatColorLabel);
+        return;
+      }
+      const filtered = carsData.filter((c) => c.brand === brand && c.model === model && c.year === year);
+      const colors = unique(baseColors.concat(filtered.map((c) => c.color)));
+      populateSelect(colorSelect, colors, formatColorLabel);
+    });
+
+    colorSelect.addEventListener('change', () => {});
+
+    let partsData = [];
+    fetch('/api/parts')
+      .then((res) => res.json())
+      .then((data) => {
+        partsData = data.parts || [];
+        const grouped = partsData.reduce((acc, item) => {
+          acc[item.category] = acc[item.category] || [];
+          acc[item.category].push(item.name);
+          return acc;
+        }, {});
+        partCategorySelect.innerHTML = `<option value=\"\">${getSelectPlaceholder()}</option>`;
+        Object.keys(grouped).forEach((category) => {
+          const option = document.createElement('option');
+          option.value = category;
+          option.textContent = category;
+          partCategorySelect.appendChild(option);
+        });
+        partTypeSelect.innerHTML = `<option value=\"\">${getSelectPlaceholder()}</option>`;
+      })
+      .catch(() => {
+        partCategorySelect.innerHTML = `<option value=\"\">${getSelectPlaceholder()}</option>`;
+        partTypeSelect.innerHTML = `<option value=\"\">${getSelectPlaceholder()}</option>`;
+      });
+
+    partCategorySelect.addEventListener('change', () => {
+      const category = partCategorySelect.value;
+      const filtered = partsData.filter((p) => p.category === category);
+      const names = unique(filtered.map((p) => p.name));
+      partTypeSelect.innerHTML = `<option value=\"\">${getSelectPlaceholder()}</option>`;
+      names.forEach((name) => {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        partTypeSelect.appendChild(option);
+      });
+    });
+
+    document.querySelectorAll('.lang-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        currentLang = btn.dataset.lang;
+        localStorage.setItem('siteLang', currentLang);
+        applyTranslations();
+        updateSelectPlaceholders();
+        updateOtherPlaceholders();
+      });
+    });
+
+    submitPost.addEventListener('click', async () => {
+      messageEl.textContent = '';
+      const currentUser = localStorage.getItem('currentUser');
+      if (!currentUser) {
+        window.location.href = './login.html';
+        return;
+      }
+
+      const email = JSON.parse(currentUser).email;
+      const brand = brandSelect.value === '__other__' ? (otherBrand.value || '').trim() : brandSelect.value;
+      const model = modelSelect.value === '__other__' ? (otherModel.value || '').trim() : modelSelect.value;
+      const year = yearSelect.value === '__other__' ? (otherYear.value || '').trim() : yearSelect.value;
+      const color = colorSelect.value;
+
+      if (!brand || !model || !year || !color) {
+        const dict = translations[currentLang] || translations.az;
+        messageEl.textContent = dict.msg_fill;
+        messageEl.className = 'mt-3 text-danger';
+        return;
+      }
+
+      const title = document.getElementById('post-title').value.trim();
+      const desc = document.getElementById('post-desc').value.trim();
+      const partType = partTypeSelect.value.trim();
+      const imageFile = document.getElementById('post-image').files[0];
+      const price = document.getElementById('post-price').value;
+      const priceCurrency = document.getElementById('post-price-currency').value;
+
+      const formData = new FormData();
+      formData.append('email', email);
+      formData.append('title', title || 'Paylaşım');
+      formData.append('description', desc);
+      formData.append('part_type', partType);
+      formData.append('car_brand', brand);
+      formData.append('car_model', model);
+      formData.append('car_year', year);
+      formData.append('car_color', color);
+      formData.append('price', price);
+      formData.append('price_currency', priceCurrency);
+      if (imageFile) {
+        formData.append('image', imageFile);
+      }
+
+      try {
+        const response = await fetch('/api/posts', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          const dict = translations[currentLang] || translations.az;
+          messageEl.textContent = data.error || dict.msg_error;
+          messageEl.className = 'mt-3 text-danger';
+          return;
+        }
+        window.location.href = `./post.html?id=${data.id}`;
+      } catch (err) {
+        const dict = translations[currentLang] || translations.az;
+        messageEl.textContent = dict.msg_server;
+        messageEl.className = 'mt-3 text-danger';
+      }
+    });
+  </script>
+</body>
+
+</html>
