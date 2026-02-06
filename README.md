@@ -6,14 +6,17 @@ The project focuses on solving the common problem of “zapçast tapılmır” b
 
 ---
 
-## Main Features
+## Main Features (Full)
 
 ### User & Auth
 - Registration and login system
 - Email verification flow
+- Forgot password flow (email reset link)
+- Password reset page with token + new password
 - Profile page with editable name/phone
 - Profile image upload and delete
 - Role-based access (user/admin)
+- Admin-only features are hidden for non-admin users
 
 ### Listings (Posts)
 - Create posts with car info, part type, description, image, and price
@@ -21,11 +24,21 @@ The project focuses on solving the common problem of “zapçast tapılmır” b
 - Owner/Admin can edit and delete posts
 - Price with currency (AZN / USD / EUR)
 - Call button to reveal phone number
+- Like button and favorites saving
+- Approximate AZN price when currency is not AZN
+- Price history tracking with increase/decrease indicators
 
 ### Search & Filters
 - Global header search
 - Filter by brand / model / year / color
 - Filter by spare part type
+- Search suggestions for brand/model/year/color and header search
+- Brand input scopes model suggestions to that brand
+
+### Favorites
+- Users can like posts and save them to Favorites
+- Favorites page lists saved posts
+- Remove from favorites
 
 ### Admin Panel (Full)
 - Users: list, edit, delete, change role
@@ -35,6 +48,14 @@ The project focuses on solving the common problem of “zapçast tapılmır” b
 - Parts: list, add, delete
 - Pending Users: list, delete
 - Pending Cars: list, approve, delete
+- Admin-only navigation link shown for admins
+
+### UI/UX
+- Multi-language UI (AZ/EN/RU) stored in localStorage
+- Animated search placeholder
+- Floating “add post” button (login required)
+- Consistent header/footer styling across pages
+- Card like animation and “Bəyənildi” toast
 
 ---
 
@@ -96,6 +117,8 @@ SMTP_FROM="AutoDetail.az <your@gmail.com>"
 
 - Only **post owner** or **admin** can edit/delete listings.
 - Admin panel is available at `/admin.html` for admin users only.
+- Favorites and likes are stored in the database.
+- Price history is recorded on each price change.
 
 ---
 
