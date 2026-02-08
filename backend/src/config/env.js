@@ -14,5 +14,7 @@ module.exports = {
   SMTP_PORT: Number(process.env.SMTP_PORT || 587),
   SMTP_USER: process.env.SMTP_USER || '',
   SMTP_PASS: process.env.SMTP_PASS || '',
-  SMTP_FROM: process.env.SMTP_FROM || ''
+  SMTP_FROM: process.env.SMTP_FROM || '',
+  CONTACT_TO: process.env.CONTACT_TO || 'autodetail045@gmail.com',
+  FRONTEND_URL: process.env.FRONTEND_URL || 'http://localhost:4000'
 };

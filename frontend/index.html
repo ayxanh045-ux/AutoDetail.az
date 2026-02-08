@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AutoDetail.az</title>
-  <link href="./style.css" rel="stylesheet">
+  <link href="style.css?v=4" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
@@ -25,14 +25,17 @@
                 d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z" />
             </svg></li>
           <li><a href="./index.html" class="nav-link px-2 text-secondary" data-i18n="nav_home">Home</a></li>
-          <li><a href="./Contact.html" class="nav-link px-2 text-white" data-i18n="nav_contact">Contact</a></li>
           <li><a href="./profile.html" class="nav-link px-2 text-white" data-i18n="nav_profile">Profil</a></li>
           <li><a href="./about.html" class="nav-link px-2 text-white" data-i18n="nav_about">About</a></li>
+          <li><a href="./favorites.html" class="nav-link px-2 text-white favorites-only d-none">Sevimlilərim</a></li>
           <li><a href="./admin.html" class="nav-link px-2 text-white admin-only d-none">Admin</a></li>
         </ul>
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-          <input id="header-search" type="search" class="form-control form-control-dark text-bg-dark" placeholder="search.."
-            aria-label="Search">
+          <div class="suggest-wrap">
+            <input id="header-search" type="search" class="form-control form-control-dark text-bg-dark" placeholder="search.."
+              aria-label="Search">
+            <div id="header-suggest" class="suggest-dropdown d-none"></div>
+          </div>
         </form>
         <div class="language-switcher ms-lg-2 me-lg-3">
           <button type="button" class="btn btn-outline-light btn-sm lang-btn" data-lang="az">🇦🇿</button>
@@ -65,10 +68,30 @@
   <hr class="border-light border-2 opacity-75 my-0">
   <div class="container my-3 filter-bar">
     <div class="row g-2">
-      <div class="col-md-3"><input id="filter-brand" class="form-control" placeholder="Brand"></div>
-      <div class="col-md-3"><input id="filter-model" class="form-control" placeholder="Model"></div>
-      <div class="col-md-2"><input id="filter-year" class="form-control" placeholder="Year"></div>
-      <div class="col-md-2"><input id="filter-color" class="form-control" placeholder="Color"></div>
+      <div class="col-md-3">
+        <div class="suggest-wrap">
+          <input id="filter-brand" class="form-control" placeholder="Brand">
+          <div id="filter-brand-suggest" class="suggest-dropdown d-none"></div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="suggest-wrap">
+          <input id="filter-model" class="form-control" placeholder="Model">
+          <div id="filter-model-suggest" class="suggest-dropdown d-none"></div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="suggest-wrap">
+          <input id="filter-year" class="form-control" placeholder="Year">
+          <div id="filter-year-suggest" class="suggest-dropdown d-none"></div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="suggest-wrap">
+          <input id="filter-color" class="form-control" placeholder="Color">
+          <div id="filter-color-suggest" class="suggest-dropdown d-none"></div>
+        </div>
+      </div>
       <div class="col-md-2"><button id="filter-clear" class="btn btn-warning w-100">Clear</button></div>
     </div>
     <div class="row g-2 mt-3">
@@ -104,9 +127,17 @@
   <footer class="bg-dark text-white py-3 mt-auto">
     <div class="container">
 
+            <div class="footer-contact mb-3">
+        <div class="footer-contact-label">Əlaqə üçün:</div>
+        <div class="footer-contact-row">
+          <input class="footer-contact-input form-control form-control-dark text-bg-dark" placeholder="Emailinizi yazın">
+          <input class="footer-contact-message form-control form-control-dark text-bg-dark" placeholder="Mesajınızı yazın">
+          <button class="footer-contact-send btn btn-warning">Göndər</button>
+        </div>
+      </div>
+
       <ul class="nav justify-content-center border-bottom pb-3 mb-3">
         <li class="nav-item"><a href="./index.html" class="nav-link px-2 text-white" data-i18n="nav_home">Home</a></li>
-        <li class="nav-item"><a href="./contact.html" class="nav-link px-2 text-white" data-i18n="nav_contact">Contact</a></li>
         <li class="nav-item"><a href="./profile.html" class="nav-link px-2 text-white" data-i18n="nav_profile">Profil</a></li>
         <li class="nav-item"><a href="./about.html" class="nav-link px-2 text-white" data-i18n="nav_about">About</a></li>
       </ul>
@@ -136,6 +167,8 @@
         btn_view: 'Bax',
         btn_edit: 'Redaktə',
         thumb: 'Miniatür',
+        msg_liked: 'Bəyənildi',
+        msg_unliked: 'Bəyənmə ləğv edildi',
         search_frames: ['Axtar', 'Axtar.', 'Axtar..', 'Axtar...']
       },
       en: {
@@ -155,6 +188,8 @@
         btn_view: 'View',
         btn_edit: 'Edit',
         thumb: 'Thumbnail',
+        msg_liked: 'Liked',
+        msg_unliked: 'Unliked',
         search_frames: ['Search', 'Search.', 'Search..', 'Search...']
       },
       ru: {
@@ -174,6 +209,8 @@
         btn_view: 'Просмотр',
         btn_edit: 'Редактировать',
         thumb: 'Миниатюра',
+        msg_liked: 'Понравилось',
+        msg_unliked: 'Убрано из избранного',
         search_frames: ['Поиск', 'Поиск.', 'Поиск..', 'Поиск...']
       }
     };
@@ -230,18 +267,42 @@
 
     const postsGrid = document.getElementById('posts-grid');
     const headerSearch = document.getElementById('header-search');
+    const headerSuggest = document.getElementById('header-suggest');
     const filterBrand = document.getElementById('filter-brand');
+    const filterBrandSuggest = document.getElementById('filter-brand-suggest');
     const filterModel = document.getElementById('filter-model');
+    const filterModelSuggest = document.getElementById('filter-model-suggest');
     const filterYear = document.getElementById('filter-year');
+    const filterYearSuggest = document.getElementById('filter-year-suggest');
     const filterColor = document.getElementById('filter-color');
+    const filterColorSuggest = document.getElementById('filter-color-suggest');
     const filterClear = document.getElementById('filter-clear');
     const filterPart = document.getElementById('filter-part');
     const filterPartClear = document.getElementById('filter-part-clear');
     const partSuggestions = document.getElementById('part-suggestions');
     let postsCache = [];
+    let favoriteIds = new Set();
+    let brandOptions = [];
+    let modelOptions = [];
+    let searchOptions = [];
+    let yearOptions = [];
+    let colorOptions = [];
+    let modelsData = [];
+
+    const renderSuggest = (box, items) => {
+      if (!box) return;
+      if (!items.length) {
+        box.classList.add('d-none');
+        box.innerHTML = '';
+        return;
+      }
+      box.innerHTML = items.map((item) => `<button type="button" class="suggest-item">${item}</button>`).join('');
+      box.classList.remove('d-none');
+    };
 
     const renderPosts = (posts) => {
       if (!postsGrid) return;
+      const dict = translations[currentLang] || translations.az;
       if (!posts || posts.length === 0) {
         postsGrid.innerHTML = '<div class="col-12 text-body-secondary">Hələ paylaşım yoxdur.</div>';
         return;
@@ -251,9 +312,14 @@
           const image = post.image_url
             ? `<img src="${post.image_url}" class="card-img-top" alt="Paylaşım">`
             : '';
+          const liked = favoriteIds.has(post.id);
           return `
             <div class="col">
-              <div class="card shadow-sm h-100" style="cursor:pointer" onclick="window.location.href='./post.html?id=${post.id}'">
+              <div class="card shadow-sm h-100 position-relative" style="cursor:pointer" onclick="if(event.target.closest('.card-like-btn')){return;} window.location.href='./post.html?id=${post.id}'">
+                <button class="card-like-btn ${liked ? 'liked' : ''}" data-like-id="${post.id}" title="Like" onclick="event.stopPropagation(); event.preventDefault();">
+                  ${liked ? '♥' : '♡'}
+                </button>
+                <div class="card-like-toast" data-like-toast="${post.id}"></div>
                 ${image}
                 <div class="card-body">
                   <h3 class="h6 mb-1">${post.title || 'Paylaşım'}</h3>
@@ -266,6 +332,19 @@
           `;
         })
         .join('');
+    };
+    const showLikeToast = (btn, message) => {
+      if (!btn) return;
+      const card = btn.closest('.card');
+      if (!card) return;
+      const toast = card.querySelector(`.card-like-toast[data-like-toast="${btn.dataset.likeId}"]`);
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toast.timer);
+      toast.timer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 1200);
     };
 
     const applyFilters = () => {
@@ -291,15 +370,33 @@
       renderPosts(list);
     };
 
+    const loadFavorites = async () => {
+      const currentUserRaw = localStorage.getItem('currentUser');
+      if (!currentUserRaw) return;
+      const email = JSON.parse(currentUserRaw).email;
+      try {
+        const data = await fetch(`/api/favorites?email=${encodeURIComponent(email)}`).then(r => r.json());
+        favoriteIds = new Set((data.favorites || []).map((f) => f.id));
+      } catch {}
+    };
+
     fetch('/api/posts')
       .then((res) => res.json())
       .then((data) => {
         postsCache = data.posts || [];
-        renderPosts(postsCache);
+        loadFavorites().finally(() => renderPosts(postsCache));
         if (partSuggestions) {
           const parts = Array.from(new Set(postsCache.map((p) => p.part_type).filter(Boolean)));
           partSuggestions.innerHTML = parts.map((p) => `<option value="${p}"></option>`).join('');
         }
+        searchOptions = Array.from(new Set(
+          postsCache.flatMap((p) => [
+            p.title,
+            p.part_type,
+            p.car_brand,
+            p.car_model
+          ]).filter(Boolean)
+        ));
       })
       .catch(() => {
         if (postsGrid) {
@@ -307,9 +404,190 @@
         }
       });
 
+    fetch('/api/cars/models')
+      .then((res) => res.json())
+      .then((data) => {
+        modelsData = data.models || [];
+        brandOptions = Array.from(new Set(modelsData.map((m) => m.brand).filter(Boolean)));
+        modelOptions = Array.from(new Set(modelsData.map((m) => m.model).filter(Boolean)));
+      })
+      .catch(() => {
+        brandOptions = [];
+        modelOptions = [];
+      });
+
+    fetch('/api/cars')
+      .then((res) => res.json())
+      .then((data) => {
+        const cars = data.cars || [];
+        yearOptions = Array.from(new Set(cars.map((c) => c.year).filter(Boolean))).map(String).sort((a, b) => Number(b) - Number(a));
+        colorOptions = Array.from(new Set(cars.map((c) => c.color).filter(Boolean)));
+      })
+      .catch(() => {
+        yearOptions = [];
+        colorOptions = [];
+      });
+
     if (headerSearch) headerSearch.addEventListener('input', applyFilters);
     [filterBrand, filterModel, filterYear, filterColor, filterPart].forEach((el) => {
       if (el) el.addEventListener('input', applyFilters);
+    });
+
+    if (headerSearch && headerSuggest) {
+      const updateHeaderSuggest = () => {
+        const q = headerSearch.value.trim().toLowerCase();
+        if (!q) {
+          renderSuggest(headerSuggest, []);
+          return;
+        }
+        const filtered = searchOptions.filter((s) => String(s).toLowerCase().includes(q));
+        const items = (filtered.length ? filtered : searchOptions).slice(0, 8);
+        renderSuggest(headerSuggest, items);
+      };
+      headerSearch.addEventListener('input', updateHeaderSuggest);
+      headerSearch.addEventListener('focus', updateHeaderSuggest);
+    }
+
+    if (filterBrand && filterBrandSuggest) {
+      const updateBrandSuggest = () => {
+        const q = filterBrand.value.trim().toLowerCase();
+        if (!q) {
+          renderSuggest(filterBrandSuggest, []);
+          return;
+        }
+        const filtered = brandOptions.filter((s) => String(s).toLowerCase().includes(q));
+        const items = (filtered.length ? filtered : brandOptions).slice(0, 8);
+        renderSuggest(filterBrandSuggest, items);
+      };
+      filterBrand.addEventListener('input', updateBrandSuggest);
+      filterBrand.addEventListener('focus', updateBrandSuggest);
+    }
+
+    if (filterModel && filterModelSuggest) {
+      const updateModelSuggest = () => {
+        const q = filterModel.value.trim().toLowerCase();
+        const brand = (filterBrand?.value || '').trim().toLowerCase();
+        const scopedModels = brand
+          ? modelsData
+              .filter((m) => String(m.brand || '').toLowerCase().includes(brand))
+              .map((m) => m.model)
+          : modelOptions;
+        const uniqModels = Array.from(new Set(scopedModels));
+        if (!q) {
+          renderSuggest(filterModelSuggest, uniqModels.slice(0, 8));
+          return;
+        }
+        const filtered = uniqModels.filter((s) => String(s).toLowerCase().includes(q));
+        const items = (filtered.length ? filtered : uniqModels).slice(0, 8);
+        renderSuggest(filterModelSuggest, items);
+      };
+      filterModel.addEventListener('input', updateModelSuggest);
+      filterModel.addEventListener('focus', updateModelSuggest);
+      if (filterBrand) {
+        filterBrand.addEventListener('input', () => {
+          if (document.activeElement === filterModel) {
+            updateModelSuggest();
+          }
+        });
+      }
+    }
+
+    if (filterYear && filterYearSuggest) {
+      const updateYearSuggest = () => {
+        const q = filterYear.value.trim().toLowerCase();
+        if (!q) {
+          renderSuggest(filterYearSuggest, yearOptions.slice(0, 8));
+          return;
+        }
+        const filtered = yearOptions.filter((s) => String(s).toLowerCase().includes(q));
+        const items = (filtered.length ? filtered : yearOptions).slice(0, 8);
+        renderSuggest(filterYearSuggest, items);
+      };
+      filterYear.addEventListener('input', updateYearSuggest);
+      filterYear.addEventListener('focus', updateYearSuggest);
+    }
+
+    if (filterColor && filterColorSuggest) {
+      const updateColorSuggest = () => {
+        const q = filterColor.value.trim().toLowerCase();
+        if (!q) {
+          renderSuggest(filterColorSuggest, colorOptions.slice(0, 8));
+          return;
+        }
+        const filtered = colorOptions.filter((s) => String(s).toLowerCase().includes(q));
+        const items = (filtered.length ? filtered : colorOptions).slice(0, 8);
+        renderSuggest(filterColorSuggest, items);
+      };
+      filterColor.addEventListener('input', updateColorSuggest);
+      filterColor.addEventListener('focus', updateColorSuggest);
+    }
+
+    if (headerSuggest) {
+      headerSuggest.addEventListener('click', (e) => {
+        const btn = e.target.closest('.suggest-item');
+        if (!btn) return;
+        headerSearch.value = btn.textContent;
+        headerSuggest.classList.add('d-none');
+        applyFilters();
+      });
+    }
+
+    if (filterBrandSuggest) {
+      filterBrandSuggest.addEventListener('click', (e) => {
+        const btn = e.target.closest('.suggest-item');
+        if (!btn) return;
+        filterBrand.value = btn.textContent;
+        filterBrandSuggest.classList.add('d-none');
+        applyFilters();
+      });
+    }
+
+    if (filterModelSuggest) {
+      filterModelSuggest.addEventListener('click', (e) => {
+        const btn = e.target.closest('.suggest-item');
+        if (!btn) return;
+        filterModel.value = btn.textContent;
+        filterModelSuggest.classList.add('d-none');
+        applyFilters();
+      });
+    }
+
+    if (filterYearSuggest) {
+      filterYearSuggest.addEventListener('click', (e) => {
+        const btn = e.target.closest('.suggest-item');
+        if (!btn) return;
+        filterYear.value = btn.textContent;
+        filterYearSuggest.classList.add('d-none');
+        applyFilters();
+      });
+    }
+
+    if (filterColorSuggest) {
+      filterColorSuggest.addEventListener('click', (e) => {
+        const btn = e.target.closest('.suggest-item');
+        if (!btn) return;
+        filterColor.value = btn.textContent;
+        filterColorSuggest.classList.add('d-none');
+        applyFilters();
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      if (headerSuggest && !headerSuggest.contains(e.target) && e.target !== headerSearch) {
+        headerSuggest.classList.add('d-none');
+      }
+      if (filterBrandSuggest && !filterBrandSuggest.contains(e.target) && e.target !== filterBrand) {
+        filterBrandSuggest.classList.add('d-none');
+      }
+      if (filterModelSuggest && !filterModelSuggest.contains(e.target) && e.target !== filterModel) {
+        filterModelSuggest.classList.add('d-none');
+      }
+      if (filterYearSuggest && !filterYearSuggest.contains(e.target) && e.target !== filterYear) {
+        filterYearSuggest.classList.add('d-none');
+      }
+      if (filterColorSuggest && !filterColorSuggest.contains(e.target) && e.target !== filterColor) {
+        filterColorSuggest.classList.add('d-none');
+      }
     });
     if (filterClear) {
       filterClear.addEventListener('click', () => {
@@ -329,6 +607,47 @@
       });
     }
 
+    document.addEventListener('click', async (e) => {
+      const btn = e.target.closest('.card-like-btn');
+      if (!btn) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const postId = Number(btn.dataset.likeId);
+      const currentUserRaw = localStorage.getItem('currentUser');
+      if (!currentUserRaw) {
+        alert('Bəyənmək üçün daxil olmalısınız.');
+        return;
+      }
+      const email = JSON.parse(currentUserRaw).email;
+      try {
+        const wasLiked = favoriteIds.has(postId);
+        if (wasLiked) {
+          await fetch('/api/favorites', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, post_id: postId })
+          });
+          favoriteIds.delete(postId);
+        } else {
+          await fetch('/api/favorites', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, post_id: postId })
+          });
+          favoriteIds.add(postId);
+        }
+        btn.classList.toggle('liked', !wasLiked);
+        btn.textContent = wasLiked ? '♡' : '♥';
+        btn.classList.add('like-burst');
+        setTimeout(() => btn.classList.remove('like-burst'), 650);
+        const dict = translations[currentLang] || translations.az;
+        showLikeToast(btn, wasLiked ? dict.msg_unliked : dict.msg_liked);
+      } catch {
+        const dict = translations[currentLang] || translations.az;
+        showLikeToast(btn, dict.msg_error || 'Xəta baş verdi');
+      }
+    }, true);
+
     const guestEl = document.getElementById('auth-guest');
     const userEl = document.getElementById('auth-user');
     const logoutBtn = document.getElementById('logout-btn');
@@ -341,8 +660,10 @@
     }
 
     const adminLinks = document.querySelectorAll('.admin-only');
+    const favoritesLinks = document.querySelectorAll('.favorites-only');
     if (currentUser) {
       const email = JSON.parse(currentUser).email;
+      favoritesLinks.forEach((el) => el.classList.remove('d-none'));
       fetch(`/api/profile?email=${encodeURIComponent(email)}`)
         .then((res) => res.json())
         .then((data) => {
@@ -361,7 +682,9 @@
     }
 
     applyTranslations();
+
   </script>
+  <script src="./assets/contact.js?v=4"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </html>

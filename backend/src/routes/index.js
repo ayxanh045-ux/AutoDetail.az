@@ -6,6 +6,9 @@ const carsRouter = require('./cars');
 const postsRouter = require('./posts');
 const partsRouter = require('./parts');
 const adminRouter = require('./admin');
+const favoritesRouter = require('./favorites');
+const ratesRouter = require('./rates');
+const contactRouter = require('./contact');
 
 const router = express.Router();
 
@@ -20,5 +23,8 @@ router.use('/cars', carsRouter);
 router.use('/posts', postsRouter);
 router.use('/parts', partsRouter);
 router.use('/admin', adminRouter);
+router.use('/favorites', favoritesRouter);
+router.use('/rates', ratesRouter);
+router.use('/contact', contactRouter);
 
 module.exports = router;

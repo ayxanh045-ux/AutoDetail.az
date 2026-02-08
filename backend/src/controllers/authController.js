@@ -1,8 +1,9 @@
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 const { asyncHandler } = require('../utils/asyncHandler');
 const { pool } = require('../db');
-const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM } = require('../config/env');
+const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM, FRONTEND_URL } = require('../config/env');
 
 const mailer = SMTP_HOST && SMTP_USER && SMTP_PASS
   ? nodemailer.createTransport({
@@ -23,6 +24,17 @@ const sendVerificationEmail = async (email, code) => {
   const from = SMTP_FROM || SMTP_USER;
   const subject = 'AutoDetail.az | Email təsdiqi';
   const text = `Təsdiq kodunuz: ${code}\nKod 10 dəqiqə ərzində etibarlıdır.`;
+  await mailer.sendMail({ from, to: email, subject, text });
+};
+
+const sendPasswordResetEmail = async (email, token) => {
+  if (!mailer) {
+    return;
+  }
+  const from = SMTP_FROM || SMTP_USER;
+  const resetLink = `${FRONTEND_URL}/reset.html?email=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}`;
+  const subject = 'AutoDetail.az | Parolun sıfırlanması';
+  const text = `Parolu sıfırlamaq üçün link:\n${resetLink}\n\nLink 30 dəqiqə ərzində etibarlıdır.`;
   await mailer.sendMail({ from, to: email, subject, text });
 };
 
@@ -138,6 +150,62 @@ const verifyEmail = asyncHandler(async (req, res) => {
   return res.json({ message: 'Email verified successfully.' });
 });
 
+const requestPasswordReset = asyncHandler(async (req, res) => {
+  const { email } = req.body || {};
+  if (!email) {
+    return res.status(400).json({ error: 'Email is required.' });
+  }
+
+  const normalizedEmail = String(email).trim().toLowerCase();
+  const [rows] = await pool.query('SELECT idUsers FROM Users WHERE email = ? LIMIT 1', [
+    normalizedEmail
+  ]);
+
+  if (rows.length === 0) {
+    return res.json({ message: 'If the email exists, a reset link has been sent.' });
+  }
+
+  const token = crypto.randomBytes(24).toString('hex');
+  const expiresAt = new Date(Date.now() + 30 * 60 * 1000);
+
+  await pool.query('DELETE FROM PasswordResets WHERE email = ?', [normalizedEmail]);
+  await pool.query(
+    'INSERT INTO PasswordResets (email, token, expires_at) VALUES (?, ?, ?)',
+    [normalizedEmail, token, expiresAt]
+  );
+
+  await sendPasswordResetEmail(normalizedEmail, token);
+  return res.json({ message: 'If the email exists, a reset link has been sent.' });
+});
+
+const resetPassword = asyncHandler(async (req, res) => {
+  const { email, token, password } = req.body || {};
+  if (!email || !token || !password) {
+    return res.status(400).json({ error: 'Email, token and password are required.' });
+  }
+
+  const normalizedEmail = String(email).trim().toLowerCase();
+  const [rows] = await pool.query(
+    'SELECT id, token, expires_at FROM PasswordResets WHERE email = ? AND token = ? LIMIT 1',
+    [normalizedEmail, String(token).trim()]
+  );
+
+  if (rows.length === 0) {
+    return res.status(400).json({ error: 'Invalid or expired token.' });
+  }
+  const resetRow = rows[0];
+  if (new Date(resetRow.expires_at).getTime() < Date.now()) {
+    await pool.query('DELETE FROM PasswordResets WHERE id = ?', [resetRow.id]);
+    return res.status(400).json({ error: 'Invalid or expired token.' });
+  }
+
+  const passwordHash = await bcrypt.hash(String(password), 10);
+  await pool.query('UPDATE Users SET password = ? WHERE email = ?', [passwordHash, normalizedEmail]);
+  await pool.query('DELETE FROM PasswordResets WHERE id = ?', [resetRow.id]);
+
+  return res.json({ message: 'Password updated successfully.' });
+});
+
 const resendVerification = asyncHandler(async (req, res) => {
   const { email } = req.body || {};
   if (!email) {
@@ -166,4 +234,4 @@ const resendVerification = asyncHandler(async (req, res) => {
   return res.json({ message: 'Verification code sent.' });
 });
 
-module.exports = { register, login, verifyEmail, resendVerification };
+module.exports = { register, login, verifyEmail, resendVerification, requestPasswordReset, resetPassword };

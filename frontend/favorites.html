@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="az">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sevimlilərim | AutoDetail.az</title>
+  <link href="style.css?v=4" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body class="text-bg-dark d-flex flex-column min-vh-100">
+  <header class="p-3 text-bg-dark">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+            <use xlink:href="#bootstrap"></use>
+          </svg>
+        </a>
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li class="maşın-logo"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-car-front-fill" viewBox="0 0 16 16">
+              <path
+                d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z" />
+            </svg></li>
+          <li><a href="./index.html" class="nav-link px-2 text-white">Home</a></li>
+          <li><a href="./profile.html" class="nav-link px-2 text-white">Profil</a></li>
+          <li><a href="./about.html" class="nav-link px-2 text-white">About</a></li>
+          <li><a href="./favorites.html" class="nav-link px-2 text-secondary favorites-only d-none">Sevimlilərim</a></li>
+          <li><a href="./admin.html" class="nav-link px-2 text-white admin-only d-none">Admin</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  <hr class="border-light border-2 opacity-75 my-0">
+
+  <main class="container py-5 flex-grow-1">
+    <h1 class="h3 mb-3">Sevimlilərim</h1>
+    <div id="favorites-message" class="text-warning mb-3"></div>
+    <div id="favorites-grid" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"></div>
+  </main>
+
+  <hr class="border-light border-2 opacity-75 my-0">
+  <footer class="bg-dark text-white py-3 mt-auto">
+    <div class="container">
+            <div class="footer-contact mb-3">
+        <div class="footer-contact-label">Əlaqə üçün:</div>
+        <div class="footer-contact-row">
+          <input class="footer-contact-input form-control form-control-dark text-bg-dark" placeholder="Emailinizi yazın">
+          <input class="footer-contact-message form-control form-control-dark text-bg-dark" placeholder="Mesajınızı yazın">
+          <button class="footer-contact-send btn btn-warning">Göndər</button>
+        </div>
+      </div>
+      <p class="text-center mb-0">© 2026 AutoDetail.az</p>
+    </div>
+  </footer>
+
+  <script>
+    const msgEl = document.getElementById('favorites-message');
+    const grid = document.getElementById('favorites-grid');
+    const adminLinks = document.querySelectorAll('.admin-only');
+    const favoritesLinks = document.querySelectorAll('.favorites-only');
+    const currentUserRaw = localStorage.getItem('currentUser');
+
+    const renderFavorites = (posts, email) => {
+      if (!posts || posts.length === 0) {
+        msgEl.textContent = 'Sevimlilərdə heç bir elan yoxdur.';
+        grid.innerHTML = '';
+        return;
+      }
+      msgEl.textContent = '';
+      grid.innerHTML = posts.map((post) => {
+        const image = post.image_url ? `<img src="${post.image_url}" class="card-img-top" alt="Paylaşım">` : '';
+        return `
+          <div class="col">
+            <div class="card shadow-sm h-100 position-relative">
+              ${image}
+              <div class="card-body" style="cursor:pointer" onclick="window.location.href='./post.html?id=${post.id}'">
+                <h3 class="h6 mb-1">${post.title || 'Paylaşım'}</h3>
+                <p class="text-body-secondary mb-2">${post.part_type || ''}</p>
+                <p class="mb-2 fw-semibold">${post.price !== null && post.price !== undefined ? `${post.price} ${post.price_currency || ''}`.trim() : ''}</p>
+                <p class="mb-0">${post.car_brand || ''} ${post.car_model || ''} ${post.car_year || ''} ${post.car_color || ''}</p>
+              </div>
+              <div class="p-2 pt-0">
+                <button class="btn btn-outline-danger btn-sm w-100 remove-favorite-btn" data-post-id="${post.id}">
+                  Sevimlilərdən sil
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      grid.querySelectorAll('.remove-favorite-btn').forEach((btn) => {
+        btn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          const postId = Number(btn.dataset.postId);
+          try {
+            await fetch('/api/favorites', {
+              method: 'DELETE',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email, post_id: postId })
+            });
+            await loadFavorites();
+          } catch {
+            msgEl.textContent = 'Sevimliləri yeniləmək olmadı.';
+          }
+        });
+      });
+    };
+
+    const loadFavorites = async () => {
+      const currentUserRaw = localStorage.getItem('currentUser');
+      if (!currentUserRaw) {
+        msgEl.textContent = 'Sevimlilərə baxmaq üçün daxil olmalısınız.';
+        grid.innerHTML = '';
+        return;
+      }
+      const user = JSON.parse(currentUserRaw);
+      favoritesLinks.forEach((el) => el.classList.remove('d-none'));
+      fetch(`/api/profile?email=${encodeURIComponent(user.email)}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.user && String(data.user.role).toLowerCase() === 'admin') {
+            adminLinks.forEach((el) => el.classList.remove('d-none'));
+          }
+        })
+        .catch(() => {});
+      try {
+        const data = await fetch(`/api/favorites?email=${encodeURIComponent(user.email)}`).then((r) => r.json());
+        renderFavorites(data.favorites || [], user.email);
+      } catch {
+        msgEl.textContent = 'Sevimliləri yükləmək olmadı.';
+      }
+    };
+
+    loadFavorites();
+  </script>
+  <script src="./assets/contact.js?v=4"></script>
+</body>
+
+</html>

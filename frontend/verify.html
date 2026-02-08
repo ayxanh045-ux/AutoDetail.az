@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Email Təsdiqi | AutoDetail.az</title>
-  <link href="./style.css" rel="stylesheet">
+  <link href="style.css?v=4" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
@@ -39,6 +39,7 @@
       </div>
     </div>
   </main>
+  <div id="app-toast" class="app-toast"></div>
   <script>
     const translations = {
       az: {
@@ -105,6 +106,16 @@
     const form = document.getElementById('verify-form');
     const messageEl = document.getElementById('verify-message');
     const resendBtn = document.getElementById('resend-btn');
+    const toastEl = document.getElementById('app-toast');
+    const showToast = (text, type) => {
+      if (!toastEl) return;
+      toastEl.textContent = text;
+      toastEl.className = `app-toast show ${type || ''}`.trim();
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => {
+        toastEl.className = 'app-toast';
+      }, 2000);
+    };
 
     if (!email) {
       messageEl.textContent = (translations[currentLang] || translations.az).msg_no_email;
@@ -125,23 +136,26 @@
         });
 
         const data = await response.json();
-        if (!response.ok) {
-          messageEl.textContent = data.error || dict.msg_error;
-          messageEl.className = 'mt-3 text-danger';
-          return;
-        }
-
-        messageEl.textContent = data.message || dict.msg_success;
-        messageEl.className = 'mt-3 text-success';
-        localStorage.removeItem('pendingEmail');
-        setTimeout(() => {
-          window.location.href = './login.html';
-        }, 800);
-      } catch (err) {
-        messageEl.textContent = dict.msg_server;
+      if (!response.ok) {
+        messageEl.textContent = data.error || dict.msg_error;
         messageEl.className = 'mt-3 text-danger';
+        showToast(messageEl.textContent, 'error');
+        return;
       }
-    });
+
+      messageEl.textContent = data.message || dict.msg_success;
+      messageEl.className = 'mt-3 text-success';
+      showToast(messageEl.textContent, 'success');
+      localStorage.removeItem('pendingEmail');
+      setTimeout(() => {
+        window.location.href = './login.html';
+      }, 800);
+    } catch (err) {
+      messageEl.textContent = dict.msg_server;
+      messageEl.className = 'mt-3 text-danger';
+      showToast(messageEl.textContent, 'error');
+    }
+  });
 
     resendBtn.addEventListener('click', async () => {
       if (!email) return;
@@ -158,13 +172,16 @@
         if (!response.ok) {
           messageEl.textContent = data.error || dict.msg_error;
           messageEl.className = 'mt-3 text-danger';
+          showToast(messageEl.textContent, 'error');
           return;
         }
         messageEl.textContent = data.message || dict.msg_sent;
         messageEl.className = 'mt-3 text-success';
+        showToast(messageEl.textContent, 'success');
       } catch (err) {
         messageEl.textContent = dict.msg_server;
         messageEl.className = 'mt-3 text-danger';
+        showToast(messageEl.textContent, 'error');
       }
     });
   </script>

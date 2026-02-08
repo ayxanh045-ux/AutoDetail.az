@@ -5,12 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Yeni Paylaşım | AutoDetail.az</title>
-  <link href="./style.css" rel="stylesheet">
+  <link href="./style.css?v=4" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 
-<body class="text-bg-dark d-flex flex-column min-vh-100">
+<body class="text-bg-dark d-flex flex-column min-vh-100 add-post-page">
   <header class="p-3 text-bg-dark">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -26,9 +26,9 @@
                 d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z" />
             </svg></li>
           <li><a href="./index.html" class="nav-link px-2 text-white">Home</a></li>
-          <li><a href="./contact.html" class="nav-link px-2 text-white">Contact</a></li>
           <li><a href="./profile.html" class="nav-link px-2 text-white">Profil</a></li>
           <li><a href="./about.html" class="nav-link px-2 text-white">About</a></li>
+          <li><a href="./favorites.html" class="nav-link px-2 text-white favorites-only d-none">Sevimlilərim</a></li>
           <li><a href="./admin.html" class="nav-link px-2 text-white admin-only d-none">Admin</a></li>
         </ul>
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -54,82 +54,85 @@
         <div class="card bg-dark text-white border-light shadow-lg">
           <div class="card-body p-4">
             <h1 class="h4 mb-3" data-i18n="add_title">Yeni paylaşım</h1>
-            <form>
-              <div class="mb-3">
+            <form id="add-post-form">
+              <div class="step-indicator mb-3">
+                <div class="step-dot active"></div>
+                <div class="step-dot"></div>
+                <div class="step-dot"></div>
+              </div>
+              <div class="step-section active" data-step="0">
+                <div class="mb-3 brand-block">
                 <label class="form-label" for="car-brand" data-i18n="label_brand">Maşının markası</label>
-                <select class="form-select" id="car-brand" required>
-                  <option value=\"\">Seçin...</option>
-                  <option value=\"__other__\">Digər</option>
-                </select>
-                <div id="other-brand-wrap" class="mt-2 d-none">
-                  <input class="form-control" id="other-brand" type="text" placeholder="Məs: Skoda" />
+                <div class="suggest-wrap">
+                  <input class="form-control" id="car-brand" placeholder="Markanı yazın..." required>
+                  <div id="brand-suggest" class="suggest-dropdown d-none"></div>
                 </div>
-              </div>
-              <div class="mb-3">
+                </div>
+                <div class="mb-3 model-block">
                 <label class="form-label" for="car-model" data-i18n="label_model">Maşının modeli</label>
-                <select class="form-select" id="car-model" required>
-                  <option value=\"\">Seçin...</option>
-                  <option value=\"__other__\">Digər</option>
-                </select>
-                <div id="other-model-wrap" class="mt-2 d-none">
-                  <input class="form-control" id="other-model" type="text" placeholder="Məs: Octavia" />
+                <div class="suggest-wrap">
+                  <input class="form-control" id="car-model" placeholder="Modeli yazın..." required>
+                  <div id="model-suggest" class="suggest-dropdown d-none"></div>
                 </div>
-              </div>
-              <div class="mb-3">
+                </div>
+                <div class="mb-3 year-block">
                 <label class="form-label" for="car-year" data-i18n="label_year">Maşının ili</label>
                 <select class="form-select" id="car-year" required>
                   <option value=\"\">Seçin...</option>
-                  <option value=\"__other__\">Digər</option>
                 </select>
-                <div id="other-year-wrap" class="mt-2 d-none">
-                  <input class="form-control" id="other-year" type="number" min="1970" max="2026" placeholder="Məs: 2019" />
                 </div>
-              </div>
-              <div class="mb-3">
+                <div class="mb-3 color-block">
                 <label class="form-label" for="car-color" data-i18n="label_color">Rəng</label>
                 <select class="form-select" id="car-color" required>
                   <option value=\"\">Seçin...</option>
                 </select>
+                </div>
               </div>
-              <div class="mb-3">
+              <div class="step-section" data-step="1">
+                <div class="mb-3">
                 <label class="form-label" for="part-category" data-i18n="label_part_category">Ehtiyat hissəsinin bölməsi</label>
                 <select class="form-select" id="part-category" required>
                   <option value=\"\">Seçin...</option>
                 </select>
-              </div>
-              <div class="mb-3">
+                </div>
+                <div class="mb-3">
                 <label class="form-label" for="part-type" data-i18n="label_part_type">Ehtiyat hissəsinin növü</label>
                 <select class="form-select" id="part-type" required>
                   <option value=\"\">Seçin...</option>
                 </select>
+                </div>
               </div>
-              <div class="mb-3">
+              <div class="step-section" data-step="2">
+                <div class="mb-3">
                 <label class="form-label" for="post-title" data-i18n="label_title">Başlıq</label>
                 <input class="form-control" id="post-title" type="text" placeholder="Məs: Ehtiyat hissə" />
-              </div>
-              <div class="mb-3">
+                </div>
+                <div class="mb-3">
                 <label class="form-label" for="post-image" data-i18n="label_image">Şəkil</label>
-                <input class="form-control" id="post-image" type="file" accept="image/*" />
-              </div>
-              <div class="mb-3">
+                <input class="form-control" id="post-image" type="file" accept="image/*" multiple />
+                </div>
+                <div class="mb-3">
                 <label class="form-label" for="post-price" data-i18n="label_price">Qiymət</label>
                 <input class="form-control" id="post-price" type="number" step="0.01" min="0" placeholder="0.00" />
-              </div>
-              <div class="mb-3">
+                </div>
+                <div class="mb-3">
                 <label class="form-label" for="post-price-currency" data-i18n="label_currency">Valyuta</label>
                 <select class="form-select" id="post-price-currency">
                   <option value="AZN">Manat</option>
                   <option value="USD">Dollar</option>
                   <option value="EUR">Euro</option>
                 </select>
-              </div>
-              <div class="mb-3">
+                </div>
+                <div class="mb-3">
                 <label class="form-label" for="post-desc" data-i18n="label_desc">Məlumat</label>
                 <textarea class="form-control" id="post-desc" rows="4"
                   placeholder="Müştəri üçün məlumatı yazın..."></textarea>
+                </div>
               </div>
-              <div class="d-grid">
-                <button id="submit-post" class="btn btn-warning" type="button" data-i18n="btn_submit">Paylaş</button>
+              <div class="d-flex gap-2 mt-2">
+                <button id="step-prev" class="btn btn-outline-light" type="button">Geri</button>
+                <button id="step-next" class="btn btn-warning" type="button">Növbəti</button>
+                <button id="submit-post" class="btn btn-warning ms-auto d-none" type="button" data-i18n="btn_submit">Paylaş</button>
               </div>
               <div id="post-message" class="mt-3"></div>
             </form>
@@ -138,13 +141,21 @@
       </div>
     </div>
   </main>
+  <div id="app-toast" class="app-toast"></div>
 
   <hr class="border-light border-2 opacity-75 my-0">
   <footer class="bg-dark text-white py-3 mt-auto">
     <div class="container">
+            <div class="footer-contact mb-3">
+        <div class="footer-contact-label">Əlaqə üçün:</div>
+        <div class="footer-contact-row">
+          <input class="footer-contact-input form-control form-control-dark text-bg-dark" placeholder="Emailinizi yazın">
+          <input class="footer-contact-message form-control form-control-dark text-bg-dark" placeholder="Mesajınızı yazın">
+          <button class="footer-contact-send btn btn-warning">Göndər</button>
+        </div>
+      </div>
       <ul class="nav justify-content-center border-bottom pb-0 mb-0">
         <li class="nav-item"><a href="./index.html" class="nav-link px-2 text-white">Home</a></li>
-        <li class="nav-item"><a href="./contact.html" class="nav-link px-2 text-white">Contact</a></li>
         <li class="nav-item"><a href="./profile.html" class="nav-link px-2 text-white">Profil</a></li>
         <li class="nav-item"><a href="./about.html" class="nav-link px-2 text-white">About</a></li>
       </ul>
@@ -332,9 +343,11 @@
     }
 
     const adminLinks = document.querySelectorAll('.admin-only');
+    const favoritesLinks = document.querySelectorAll('.favorites-only');
     const currentUserForAdmin = localStorage.getItem('currentUser');
     if (currentUserForAdmin) {
       const email = JSON.parse(currentUserForAdmin).email;
+      favoritesLinks.forEach((el) => el.classList.remove('d-none'));
       fetch(`/api/profile?email=${encodeURIComponent(email)}`)
         .then((res) => res.json())
         .then((data) => {
@@ -346,32 +359,93 @@
     }
   </script>
   <script>
+    const formEl = document.getElementById('add-post-form');
     const brandSelect = document.getElementById('car-brand');
     const modelSelect = document.getElementById('car-model');
     const yearSelect = document.getElementById('car-year');
     const colorSelect = document.getElementById('car-color');
-    const otherBrandWrap = document.getElementById('other-brand-wrap');
-    const otherModelWrap = document.getElementById('other-model-wrap');
-    const otherYearWrap = document.getElementById('other-year-wrap');
-    const otherBrand = document.getElementById('other-brand');
-    const otherModel = document.getElementById('other-model');
-    const otherYear = document.getElementById('other-year');
+    const brandSuggest = document.getElementById('brand-suggest');
+    const modelSuggest = document.getElementById('model-suggest');
     const submitPost = document.getElementById('submit-post');
     const messageEl = document.getElementById('post-message');
+    const toastEl = document.getElementById('app-toast');
+    const showToast = (text, type) => {
+      if (!toastEl) return;
+      toastEl.textContent = text;
+      toastEl.className = `app-toast show ${type || ''}`.trim();
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => {
+        toastEl.className = 'app-toast';
+      }, 2000);
+    };
     const partCategorySelect = document.getElementById('part-category');
     const partTypeSelect = document.getElementById('part-type');
+    const stepSections = Array.from(document.querySelectorAll('.step-section'));
+    const stepDots = Array.from(document.querySelectorAll('.step-dot'));
+    const stepPrev = document.getElementById('step-prev');
+    const stepNext = document.getElementById('step-next');
 
-    const updateOtherPlaceholders = () => {
-      const dict = translations[currentLang] || translations.az;
-      if (otherBrand) otherBrand.placeholder = dict.other_placeholder_brand || otherBrand.placeholder;
-      if (otherModel) otherModel.placeholder = dict.other_placeholder_model || otherModel.placeholder;
-      if (otherYear) otherYear.placeholder = dict.other_placeholder_year || otherYear.placeholder;
-    };
-
-    updateOtherPlaceholders();
+    const updateOtherPlaceholders = () => {};
 
     modelSelect.dataset.animate = '1';
     colorSelect.dataset.animate = '1';
+
+    let currentStep = 0;
+    const showStep = (idx) => {
+      currentStep = idx;
+      stepSections.forEach((section, i) => {
+        section.classList.toggle('active', i === idx);
+      });
+      stepDots.forEach((dot, i) => {
+        dot.classList.toggle('active', i <= idx);
+      });
+      if (stepPrev) stepPrev.disabled = idx === 0;
+      if (stepNext) stepNext.classList.toggle('d-none', idx === stepSections.length - 1);
+      if (submitPost) submitPost.classList.toggle('d-none', idx !== stepSections.length - 1);
+    };
+
+    const getValueOrOther = (select, otherInput) => {
+      if (select.value === '__other__') return (otherInput.value || '').trim();
+      return select.value;
+    };
+
+    const validateStep = (idx) => {
+      const dict = translations[currentLang] || translations.az;
+      messageEl.textContent = '';
+      messageEl.className = 'mt-3';
+      if (idx === 0) {
+        const brand = brandSelect.value.trim();
+        const model = modelSelect.value.trim();
+        const year = yearSelect.value;
+        const color = colorSelect.value;
+        if (!brand || !model || !year || !color) {
+          messageEl.textContent = dict.msg_fill;
+          messageEl.className = 'mt-3 text-danger';
+          return false;
+        }
+      }
+      if (idx === 1) {
+        if (!partCategorySelect.value || !partTypeSelect.value) {
+          messageEl.textContent = dict.msg_fill;
+          messageEl.className = 'mt-3 text-danger';
+          return false;
+        }
+      }
+      return true;
+    };
+
+    if (stepPrev) {
+      stepPrev.addEventListener('click', () => {
+        if (currentStep > 0) showStep(currentStep - 1);
+      });
+    }
+    if (stepNext) {
+      stepNext.addEventListener('click', () => {
+        if (!validateStep(currentStep)) return;
+        if (currentStep < stepSections.length - 1) showStep(currentStep + 1);
+      });
+    }
+    showStep(0);
 
     const clearOptions = (select) => {
       select.innerHTML = `<option value=\"\">${getSelectPlaceholder()}</option>`;
@@ -386,12 +460,6 @@
 
     const populateSelect = (select, values, formatter) => {
       clearOptions(select);
-      if (select !== colorSelect) {
-        const other = document.createElement('option');
-        other.value = '__other__';
-        other.textContent = getOtherLabel();
-        select.appendChild(other);
-      }
       values.forEach((value) => {
         const option = document.createElement('option');
         option.value = value;
@@ -400,13 +468,7 @@
       });
     };
 
-    const updateOtherOption = (select) => {
-      if (!select) return;
-      const other = Array.from(select.options || []).find((opt) => opt.value === '__other__');
-      if (other) {
-        other.textContent = getOtherLabel();
-      }
-    };
+    const updateOtherOption = () => {};
 
     const updateColorOptionLabels = () => {
       if (!colorSelect) return;
@@ -417,47 +479,75 @@
     };
 
     const updateSelectPlaceholders = () => {
-      [brandSelect, modelSelect, yearSelect, colorSelect, partCategorySelect, partTypeSelect].forEach((select) => {
+      [yearSelect, colorSelect, partCategorySelect, partTypeSelect].forEach((select) => {
         if (!select) return;
         const firstOption = select.options && select.options[0];
         if (firstOption && firstOption.value === '') {
           firstOption.textContent = getSelectPlaceholder();
         }
-        updateOtherOption(select);
       });
       updateColorOptionLabels();
     };
 
-    const toggleOtherInput = (select, wrap) => {
-      if (!select || !wrap) return;
-      if (select.value === '__other__') {
-        wrap.classList.remove('d-none');
-      } else {
-        wrap.classList.add('d-none');
-      }
-    };
-
     let carsData = [];
     let modelsData = [];
+    let brandOptions = [];
+    let modelOptions = [];
+    const defaultBrands = ['Mercedes-Benz','BMW','Toyota','Hyundai','Kia','LADA','Nissan','Volkswagen','Opel','Chevrolet','Ford','Honda','Lexus','Audi','Mazda'];
+    const getBrandSource = () => {
+      if (brandOptions.length) return brandOptions;
+      if (carsData.length) return unique(carsData.map((c) => c.brand));
+      if (modelsData.length) return unique(modelsData.map((c) => c.brand));
+      return defaultBrands;
+    };
+
+    const getModelSource = () => {
+      if (modelOptions.length) return modelOptions;
+      if (modelsData.length) return unique(modelsData.map((c) => c.model));
+      if (carsData.length) return unique(carsData.map((c) => c.model));
+      return [];
+    };
+
+    const updateSuggestState = () => {
+      if (!formEl) return;
+      const brandOpen = brandSuggest && !brandSuggest.classList.contains('d-none');
+      const modelOpen = modelSuggest && !modelSuggest.classList.contains('d-none');
+      formEl.classList.toggle('brand-suggest-open', !!brandOpen);
+      formEl.classList.toggle('model-suggest-open', !!modelOpen);
+    };
+
+    const renderSuggest = (box, items) => {
+      if (!box) return;
+      if (!items.length) {
+        box.classList.add('d-none');
+        box.innerHTML = '';
+        updateSuggestState();
+        return;
+      }
+      box.innerHTML = items.map((item) => `<button type="button" class="suggest-item">${item}</button>`).join('');
+      box.classList.remove('d-none');
+      updateSuggestState();
+    };
 
     fetch('/api/cars/models')
       .then((res) => res.json())
       .then((data) => {
         modelsData = data.models || [];
         const brands = unique(modelsData.map((c) => c.brand));
-        populateSelect(brandSelect, brands);
+        brandOptions = brands.slice();
+        modelOptions = unique(modelsData.map((c) => c.model));
       })
       .catch(() => {
-        clearOptions(brandSelect);
       });
 
     fetch('/api/cars')
       .then((res) => res.json())
       .then((data) => {
         carsData = data.cars || [];
-        if (!brandSelect.options || brandSelect.options.length <= 1) {
-          const brands = unique(carsData.map((c) => c.brand));
-          populateSelect(brandSelect, brands);
+        const brands = unique(carsData.map((c) => c.brand));
+        if (!brandOptions.length) brandOptions = brands.slice();
+        if (!modelOptions.length) {
+          modelOptions = unique(carsData.map((c) => c.model));
         }
       })
       .catch(() => {});
@@ -465,7 +555,7 @@
 
     const populateYearRange = () => {
       yearSelect.innerHTML = `<option value=\"\">${getSelectPlaceholder()}</option>`;
-      for (let y = 1995; y <= 2026; y += 1) {
+      for (let y = 2026; y >= 1995; y -= 1) {
         const option = document.createElement('option');
         option.value = String(y);
         option.textContent = String(y);
@@ -475,11 +565,9 @@
 
     populateYearRange();
 
-    brandSelect.addEventListener('change', () => {
-      toggleOtherInput(brandSelect, otherBrandWrap);
-      const brand = brandSelect.value;
-      if (brand === '__other__') {
-        populateSelect(modelSelect, []);
+    brandSelect.addEventListener('input', () => {
+      const brand = String(brandSelect.value || '').trim();
+      if (!brand) {
         populateYearRange();
         populateSelect(colorSelect, baseColors, formatColorLabel);
         return;
@@ -492,20 +580,18 @@
       }
       const filtered = carsData.filter((c) => c.brand === brand);
       const colors = unique(baseColors.concat(filtered.map((c) => c.color)));
-      populateSelect(modelSelect, models);
+      modelOptions = models;
+      renderSuggest(brandSuggest, getBrandSource().filter((b) => b.toLowerCase().includes(brand.toLowerCase())).slice(0, 8));
+      renderSuggest(modelSuggest, models.slice(0, 8));
       populateYearRange();
       populateSelect(colorSelect, colors, formatColorLabel);
     });
 
-    modelSelect.addEventListener('change', () => {
-      toggleOtherInput(modelSelect, otherModelWrap);
-      const brand = brandSelect.value;
-      const model = modelSelect.value;
-      if (model === '__other__') {
-        populateYearRange();
-        populateSelect(colorSelect, baseColors, formatColorLabel);
-        return;
-      }
+    modelSelect.addEventListener('input', () => {
+      const brand = String(brandSelect.value || '').trim();
+      const model = String(modelSelect.value || '').trim();
+      const source = modelOptions.length ? modelOptions : getModelSource();
+      renderSuggest(modelSuggest, source.filter((m) => m.toLowerCase().includes(model.toLowerCase())).slice(0, 8));
       const filtered = carsData.filter((c) => c.brand === brand && c.model === model);
       const colors = unique(baseColors.concat(filtered.map((c) => c.color)));
       populateYearRange();
@@ -513,20 +599,48 @@
     });
 
     yearSelect.addEventListener('change', () => {
-      toggleOtherInput(yearSelect, otherYearWrap);
-      const brand = brandSelect.value;
-      const model = modelSelect.value;
+      const brand = brandSelect.value.trim();
+      const model = modelSelect.value.trim();
       const year = Number(yearSelect.value);
-      if (yearSelect.value === '__other__') {
-        populateSelect(colorSelect, baseColors, formatColorLabel);
-        return;
-      }
       const filtered = carsData.filter((c) => c.brand === brand && c.model === model && c.year === year);
       const colors = unique(baseColors.concat(filtered.map((c) => c.color)));
       populateSelect(colorSelect, colors, formatColorLabel);
     });
 
     colorSelect.addEventListener('change', () => {});
+
+    if (brandSuggest) {
+      brandSuggest.addEventListener('click', (e) => {
+        const btn = e.target.closest('.suggest-item');
+        if (!btn) return;
+        brandSelect.value = btn.textContent;
+        brandSelect.dispatchEvent(new Event('input'));
+        brandSuggest.classList.add('d-none');
+        updateSuggestState();
+      });
+    }
+
+    if (modelSuggest) {
+      modelSuggest.addEventListener('click', (e) => {
+        const btn = e.target.closest('.suggest-item');
+        if (!btn) return;
+        modelSelect.value = btn.textContent;
+        modelSelect.dispatchEvent(new Event('input'));
+        modelSuggest.classList.add('d-none');
+        updateSuggestState();
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      if (brandSuggest && !brandSuggest.contains(e.target) && e.target !== brandSelect) {
+        brandSuggest.classList.add('d-none');
+        updateSuggestState();
+      }
+      if (modelSuggest && !modelSuggest.contains(e.target) && e.target !== modelSelect) {
+        modelSuggest.classList.add('d-none');
+        updateSuggestState();
+      }
+    });
 
     let partsData = [];
     fetch('/api/parts')
@@ -575,8 +689,12 @@
       });
     });
 
+
     submitPost.addEventListener('click', async () => {
       messageEl.textContent = '';
+      if (!validateStep(0) || !validateStep(1)) {
+        return;
+      }
       const currentUser = localStorage.getItem('currentUser');
       if (!currentUser) {
         window.location.href = './login.html';
@@ -584,22 +702,23 @@
       }
 
       const email = JSON.parse(currentUser).email;
-      const brand = brandSelect.value === '__other__' ? (otherBrand.value || '').trim() : brandSelect.value;
-      const model = modelSelect.value === '__other__' ? (otherModel.value || '').trim() : modelSelect.value;
-      const year = yearSelect.value === '__other__' ? (otherYear.value || '').trim() : yearSelect.value;
+      const brand = brandSelect.value.trim();
+      const model = modelSelect.value.trim();
+      const year = yearSelect.value;
       const color = colorSelect.value;
 
       if (!brand || !model || !year || !color) {
         const dict = translations[currentLang] || translations.az;
         messageEl.textContent = dict.msg_fill;
         messageEl.className = 'mt-3 text-danger';
+        showToast(messageEl.textContent, 'error');
         return;
       }
 
       const title = document.getElementById('post-title').value.trim();
       const desc = document.getElementById('post-desc').value.trim();
       const partType = partTypeSelect.value.trim();
-      const imageFile = document.getElementById('post-image').files[0];
+      const imageFiles = Array.from(document.getElementById('post-image').files || []);
       const price = document.getElementById('post-price').value;
       const priceCurrency = document.getElementById('post-price-currency').value;
 
@@ -614,9 +733,9 @@
       formData.append('car_color', color);
       formData.append('price', price);
       formData.append('price_currency', priceCurrency);
-      if (imageFile) {
-        formData.append('image', imageFile);
-      }
+      imageFiles.forEach((file) => {
+        formData.append('images', file);
+      });
 
       try {
         const response = await fetch('/api/posts', {
@@ -628,6 +747,7 @@
           const dict = translations[currentLang] || translations.az;
           messageEl.textContent = data.error || dict.msg_error;
           messageEl.className = 'mt-3 text-danger';
+          showToast(messageEl.textContent, 'error');
           return;
         }
         window.location.href = `./post.html?id=${data.id}`;
@@ -635,9 +755,11 @@
         const dict = translations[currentLang] || translations.az;
         messageEl.textContent = dict.msg_server;
         messageEl.className = 'mt-3 text-danger';
+        showToast(messageEl.textContent, 'error');
       }
     });
   </script>
+  <script src="./assets/contact.js?v=4"></script>
 </body>
 
 </html>

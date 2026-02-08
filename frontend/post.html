@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Paylaşım | AutoDetail.az</title>
-  <link href="./style.css" rel="stylesheet">
+  <link href="style.css?v=4" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
@@ -26,9 +26,9 @@
                 d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z" />
             </svg></li>
           <li><a href="./index.html" class="nav-link px-2 text-white">Home</a></li>
-          <li><a href="./contact.html" class="nav-link px-2 text-white">Contact</a></li>
           <li><a href="./profile.html" class="nav-link px-2 text-white">Profil</a></li>
           <li><a href="./about.html" class="nav-link px-2 text-white">About</a></li>
+          <li><a href="./favorites.html" class="nav-link px-2 text-white favorites-only d-none">Sevimlilərim</a></li>
           <li><a href="./admin.html" class="nav-link px-2 text-white admin-only d-none">Admin</a></li>
         </ul>
         <div class="add-post-center">
@@ -42,13 +42,21 @@
   <main class="container py-5 flex-grow-1">
     <div id="post-detail"></div>
   </main>
+  <div id="app-toast" class="app-toast"></div>
   <hr class="border-light border-2 opacity-75 my-0">
 
   <footer class="bg-dark text-white py-3 mt-auto">
     <div class="container">
+            <div class="footer-contact mb-3">
+        <div class="footer-contact-label">Əlaqə üçün:</div>
+        <div class="footer-contact-row">
+          <input class="footer-contact-input form-control form-control-dark text-bg-dark" placeholder="Emailinizi yazın">
+          <input class="footer-contact-message form-control form-control-dark text-bg-dark" placeholder="Mesajınızı yazın">
+          <button class="footer-contact-send btn btn-warning">Göndər</button>
+        </div>
+      </div>
       <ul class="nav justify-content-center border-bottom pb-0 mb-0">
         <li class="nav-item"><a href="./index.html" class="nav-link px-2 text-white">Home</a></li>
-        <li class="nav-item"><a href="./contact.html" class="nav-link px-2 text-white">Contact</a></li>
         <li class="nav-item"><a href="./profile.html" class="nav-link px-2 text-white">Profil</a></li>
         <li class="nav-item"><a href="./about.html" class="nav-link px-2 text-white">About</a></li>
       </ul>
@@ -60,6 +68,16 @@
     const container = document.getElementById('post-detail');
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
+    const toastEl = document.getElementById('app-toast');
+    const showToast = (text, type) => {
+      if (!toastEl) return;
+      toastEl.textContent = text;
+      toastEl.className = `app-toast show ${type || ''}`.trim();
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => {
+        toastEl.className = 'app-toast';
+      }, 2000);
+    };
 
     const translations = {
       az: {
@@ -84,6 +102,9 @@
         btn_cancel: 'Ləğv et',
         btn_delete: 'Sil',
         btn_call: 'Zəng et',
+        btn_like: 'Bəyən',
+        btn_unlike: 'Bəyənildi',
+        msg_login_like: 'Bəyənmək üçün daxil olmalısınız.',
         msg_delete_confirm: 'Paylaşımı silmək istəyirsiniz?',
         msg_delete_success: 'Paylaşım silindi.',
         msg_delete_error: 'Paylaşımı silmək olmadı.',
@@ -112,6 +133,9 @@
         btn_cancel: 'Cancel',
         btn_delete: 'Delete',
         btn_call: 'Call',
+        btn_like: 'Like',
+        btn_unlike: 'Liked',
+        msg_login_like: 'Please log in to like.',
         msg_delete_confirm: 'Delete this post?',
         msg_delete_success: 'Post deleted.',
         msg_delete_error: 'Could not delete post.',
@@ -140,6 +164,9 @@
         btn_cancel: 'Отмена',
         btn_delete: 'Удалить',
         btn_call: 'Позвонить',
+        btn_like: 'Нравится',
+        btn_unlike: 'Понравилось',
+        msg_login_like: 'Войдите, чтобы лайкнуть.',
         msg_delete_confirm: 'Удалить публикацию?',
         msg_delete_success: 'Публикация удалена.',
         msg_delete_error: 'Не удалось удалить публикацию.',
@@ -154,9 +181,11 @@
     document.documentElement.lang = currentLang;
 
     const adminLinks = document.querySelectorAll('.admin-only');
+    const favoritesLinks = document.querySelectorAll('.favorites-only');
     const headerUser = localStorage.getItem('currentUser');
     if (headerUser) {
       const email = JSON.parse(headerUser).email;
+      favoritesLinks.forEach((el) => el.classList.remove('d-none'));
       fetch(`/api/profile?email=${encodeURIComponent(email)}`)
         .then((res) => res.json())
         .then((data) => {
@@ -179,8 +208,24 @@
           }
           const post = data.post;
           const profileImage = post.user_profile_image || './assets/images/default-profile.png';
-          const image = post.image_url
-            ? `<div class="post-image-box mb-3"><img src="${post.image_url}" alt="Paylaşım"></div>`
+          const images = (post.images && post.images.length) ? post.images : (post.image_url ? [post.image_url] : []);
+          const image = images.length
+            ? `
+              <div class="post-image-box mb-3">
+                <img id="post-main-image" src="${images[0]}" alt="Paylaşım">
+                ${images.length > 1 ? `
+                  <button type="button" class="post-nav post-nav-prev" aria-label="Previous">‹</button>
+                  <button type="button" class="post-nav post-nav-next" aria-label="Next">›</button>
+                ` : ''}
+                ${images.length > 1 ? `
+                  <div class="post-thumbs mt-2">
+                    ${images.map((src, idx) => `<button type="button" class="post-thumb ${idx === 0 ? 'active' : ''}" data-src="${src}">
+                      <img src="${src}" alt="thumb">
+                    </button>`).join('')}
+                  </div>
+                ` : ''}
+              </div>
+            `
             : `<div class="post-image-box mb-3"><div class="text-center text-secondary py-5">${dict.label_no_image}</div></div>`;
           container.innerHTML = `
             <div class="card bg-dark text-white border-light shadow-lg">
@@ -249,6 +294,12 @@
                             <option value="EUR">Euro</option>
                           </select>
                         </div>
+                        <div class="mb-3">
+                          <label class="form-label">Şəkillər</label>
+                          <input id="edit-images" class="form-control form-control-sm" type="file" accept="image/*" multiple>
+                          <div id="edit-images-list" class="post-thumbs mt-2"></div>
+                          <button id="add-images-btn" type="button" class="btn btn-outline-light btn-sm mt-2">Şəkil əlavə et</button>
+                        </div>
                         <div class="d-flex gap-2">
                           <button id="save-btn" type="button" class="btn btn-warning btn-sm">${dict.btn_save}</button>
                           <button id="cancel-btn" type="button" class="btn btn-outline-light btn-sm">${dict.btn_cancel}</button>
@@ -280,10 +331,18 @@
                       </div>
                     </div>
                     <div class="post-details-card mt-3">
-                      <div class="d-flex align-items-center justify-content-between">
+                      <div id="price-card" class="d-flex align-items-center justify-content-between">
                         <div class="fw-semibold">${dict.label_price}</div>
-                        <div class="h5 mb-0">${post.price !== null && post.price !== undefined ? `${post.price} ${post.price_currency || ''}`.trim() : '-'}</div>
+                        <div class="d-flex align-items-center gap-2">
+                          <div class="h5 mb-0">${post.price !== null && post.price !== undefined ? `${post.price} ${post.price_currency || ''}`.trim() : '-'}</div>
+                          <span id="price-caret" class="price-caret text-body-secondary">▾</span>
+                        </div>
                       </div>
+                      <div id="approx-azn" class="small text-body-secondary mt-1"></div>
+                      <div id="price-history" class="mt-2 d-none"></div>
+                    </div>
+                    <div class="mt-3 d-grid">
+                      <button id="like-btn" type="button" class="btn btn-outline-warning">${dict.btn_like}</button>
                     </div>
                     <div class="mt-3">
                       <button id="call-btn" type="button" class="btn btn-success btn-sm w-100">${dict.btn_call}</button>
@@ -301,6 +360,29 @@
               el.classList.toggle('revealed');
             });
           });
+
+          const mainImage = document.getElementById('post-main-image');
+          let currentIndex = 0;
+          const updateMainImage = (idx) => {
+            if (!mainImage) return;
+            currentIndex = (idx + images.length) % images.length;
+            mainImage.src = images[currentIndex];
+            document.querySelectorAll('.post-thumb').forEach((b) => b.classList.remove('active'));
+            const activeBtn = document.querySelector(`.post-thumb[data-src="${images[currentIndex]}"]`);
+            if (activeBtn) activeBtn.classList.add('active');
+          };
+          document.querySelectorAll('.post-thumb').forEach((btn) => {
+            btn.addEventListener('click', () => {
+              const src = btn.dataset.src;
+              if (!src) return;
+              const idx = images.indexOf(src);
+              if (idx >= 0) updateMainImage(idx);
+            });
+          });
+          const prevBtn = document.querySelector('.post-nav-prev');
+          const nextBtn = document.querySelector('.post-nav-next');
+          if (prevBtn) prevBtn.addEventListener('click', () => updateMainImage(currentIndex - 1));
+          if (nextBtn) nextBtn.addEventListener('click', () => updateMainImage(currentIndex + 1));
 
           const currentUserRaw = localStorage.getItem('currentUser');
           if (currentUserRaw) {
@@ -366,14 +448,17 @@
                 if (!response.ok) {
                   editMsg.textContent = data.error || dict.msg_update_error;
                   editMsg.className = 'mt-2 small text-danger';
+                  showToast(editMsg.textContent, 'error');
                   return;
                 }
                 editMsg.textContent = dict.msg_update_success;
                 editMsg.className = 'mt-2 small text-success';
+                showToast(editMsg.textContent, 'success');
                 setTimeout(() => window.location.reload(), 600);
               } catch {
                 editMsg.textContent = dict.msg_update_error;
                 editMsg.className = 'mt-2 small text-danger';
+                showToast(editMsg.textContent, 'error');
               }
             });
           }
@@ -394,20 +479,103 @@
                 if (!response.ok) {
                   editMsg.textContent = data.error || dict.msg_delete_error;
                   editMsg.className = 'mt-2 small text-danger';
+                  showToast(editMsg.textContent, 'error');
                   return;
                 }
                 editMsg.textContent = dict.msg_delete_success;
                 editMsg.className = 'mt-2 small text-success';
+                showToast(editMsg.textContent, 'success');
                 setTimeout(() => window.location.href = './index.html', 700);
               } catch {
                 editMsg.textContent = dict.msg_delete_error;
                 editMsg.className = 'mt-2 small text-danger';
+                showToast(editMsg.textContent, 'error');
               }
             });
           }
           const editCurrency = document.getElementById('edit-currency');
           if (editCurrency && post.price_currency) {
             editCurrency.value = post.price_currency;
+          }
+          const editImagesInput = document.getElementById('edit-images');
+          const editImagesList = document.getElementById('edit-images-list');
+          const addImagesBtn = document.getElementById('add-images-btn');
+
+          const renderEditImages = () => {
+            if (!editImagesList) return;
+            const list = images.length ? images : [];
+            editImagesList.innerHTML = list.map((src) => `
+              <button type="button" class="post-thumb" data-src="${src}">
+                <img src="${src}" alt="thumb">
+                <span class="thumb-remove" data-src="${src}">×</span>
+              </button>
+            `).join('');
+          };
+          renderEditImages();
+
+          if (editImagesList) {
+            editImagesList.addEventListener('click', async (e) => {
+              const removeBtn = e.target.closest('.thumb-remove');
+              if (!removeBtn) return;
+              e.preventDefault();
+              e.stopPropagation();
+              const src = removeBtn.dataset.src;
+              const currentUserRaw = localStorage.getItem('currentUser');
+              if (!currentUserRaw) return;
+              const user = JSON.parse(currentUserRaw);
+              try {
+                await fetch(`/api/posts/${id}/images`, {
+                  method: 'DELETE',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ email: user.email, image_url: src })
+                });
+                const idx = images.indexOf(src);
+                if (idx >= 0) images.splice(idx, 1);
+                renderEditImages();
+                if (mainImage && images.length) mainImage.src = images[0];
+              } catch {
+                showToast('Şəkil silmək olmadı.', 'error');
+              }
+            });
+          }
+
+          if (addImagesBtn) {
+            addImagesBtn.addEventListener('click', async (e) => {
+              e.preventDefault();
+              const currentUserRaw = localStorage.getItem('currentUser');
+              if (!currentUserRaw) return;
+              const user = JSON.parse(currentUserRaw);
+              const files = Array.from(editImagesInput?.files || []);
+              if (!files.length) {
+                showToast('Əvvəl şəkil seçin.', 'error');
+                return;
+              }
+              const formData = new FormData();
+              formData.append('email', user.email);
+              files.forEach((file) => formData.append('images', file));
+              try {
+                const res = await fetch(`/api/posts/${id}/images`, {
+                  method: 'POST',
+                  body: formData
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                  showToast(data.error || 'Şəkil əlavə etmək olmadı.', 'error');
+                  return;
+                }
+                const refreshed = await fetch(`/api/posts/${id}`).then((r) => r.json());
+                if (refreshed.post && Array.isArray(refreshed.post.images)) {
+                  images.length = 0;
+                  images.push(...refreshed.post.images);
+                  renderEditImages();
+                  if (mainImage && images.length) mainImage.src = images[0];
+                }
+                showToast('Şəkil əlavə edildi.', 'success');
+                editImagesInput.value = '';
+              } catch {
+                showToast('Şəkil əlavə etmək olmadı.', 'error');
+              }
+            });
           }
 
           const partSelect = document.getElementById('edit-part');
@@ -515,12 +683,138 @@
               callNumber.classList.toggle('d-none');
             });
           }
+
+          const likeBtn = document.getElementById('like-btn');
+          if (likeBtn) {
+            let isLiked = false;
+            const refreshLikeState = async (email) => {
+              try {
+                const data = await fetch(`/api/favorites?email=${encodeURIComponent(email)}`).then((r) => r.json());
+                const ids = (data.favorites || []).map((f) => f.id);
+                isLiked = ids.includes(post.id);
+                if (isLiked) {
+                  likeBtn.textContent = dict.btn_unlike;
+                  likeBtn.classList.remove('btn-outline-warning');
+                  likeBtn.classList.add('btn-warning');
+                } else {
+                  likeBtn.textContent = dict.btn_like;
+                  likeBtn.classList.add('btn-outline-warning');
+                  likeBtn.classList.remove('btn-warning');
+                }
+              } catch {}
+            };
+
+            const currentUserRaw = localStorage.getItem('currentUser');
+            if (currentUserRaw) {
+              const user = JSON.parse(currentUserRaw);
+              refreshLikeState(user.email);
+            }
+
+            likeBtn.addEventListener('click', async () => {
+              const currentUserRawNow = localStorage.getItem('currentUser');
+              if (!currentUserRawNow) {
+                alert(dict.msg_login_like);
+                return;
+              }
+              const user = JSON.parse(currentUserRawNow);
+              try {
+                if (isLiked) {
+                  await fetch('/api/favorites', {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: user.email, post_id: post.id })
+                  });
+                  isLiked = false;
+                } else {
+                  await fetch('/api/favorites', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: user.email, post_id: post.id })
+                  });
+                  isLiked = true;
+                  likeBtn.classList.add('like-burst');
+                  setTimeout(() => likeBtn.classList.remove('like-burst'), 500);
+                }
+                await refreshLikeState(user.email);
+              } catch {}
+            });
+          }
+
+          const priceCard = document.getElementById('price-card');
+          const approxEl = document.getElementById('approx-azn');
+          const historyEl = document.getElementById('price-history');
+          let historyLoaded = false;
+
+          const formatMoney = (value, currency) => {
+            const v = Number(value);
+            if (!Number.isFinite(v)) return '-';
+            return `${v.toFixed(2)} ${currency || ''}`.trim();
+          };
+
+          const loadApprox = async () => {
+            const price = Number(post.price);
+            const currency = String(post.price_currency || '').toUpperCase();
+            if (!Number.isFinite(price) || !currency || currency === 'AZN') {
+              if (approxEl) approxEl.textContent = '';
+              return;
+            }
+            try {
+              const data = await fetch(`/api/rates?base=${encodeURIComponent(currency)}&target=AZN`).then((r) => r.json());
+              if (data && data.rate) {
+                const azn = price * Number(data.rate);
+                approxEl.textContent = `≈ ${azn.toFixed(2)} AZN`;
+              }
+            } catch {}
+          };
+
+          const loadHistory = async () => {
+            if (historyLoaded || !historyEl) return;
+            historyLoaded = true;
+            try {
+              const data = await fetch(`/api/posts/${id}/price-history`).then((r) => r.json());
+              const rows = data.history || [];
+              if (!rows.length) {
+                historyEl.innerHTML = `<div class="small text-body-secondary">${dict.label_price}: -</div>`;
+                return;
+              }
+              const items = rows.map((row, index) => {
+                const prev = rows[index + 1];
+                let trend = '';
+                if (prev && Number(prev.price) !== Number(row.price)) {
+                  trend = Number(row.price) > Number(prev.price) ? '↑' : '↓';
+                }
+                const date = new Date(row.changed_at).toLocaleDateString(locale);
+                return `
+                  <div class="d-flex justify-content-between small py-1 border-bottom border-secondary">
+                    <span>${date}</span>
+                    <span>${formatMoney(row.price, row.currency)} ${trend}</span>
+                  </div>
+                `;
+              }).join('');
+              historyEl.innerHTML = items;
+            } catch {
+              historyEl.innerHTML = `<div class="small text-danger">Tarixçə yüklənmədi.</div>`;
+            }
+          };
+
+          if (priceCard && historyEl) {
+            priceCard.style.cursor = 'pointer';
+            priceCard.addEventListener('click', () => {
+              historyEl.classList.toggle('d-none');
+              if (!historyEl.classList.contains('d-none')) {
+                loadHistory();
+              }
+            });
+          }
+
+          loadApprox();
         })
         .catch(() => {
           container.innerHTML = `<p class="text-danger">${dict.server_error}</p>`;
         });
     }
   </script>
+  <script src="./assets/contact.js?v=4"></script>
 </body>
 
 </html>
