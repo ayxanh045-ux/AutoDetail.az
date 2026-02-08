@@ -1,7 +1,7 @@
-const path = require('path');
-const fs = require('fs/promises');
 const { asyncHandler } = require('../utils/asyncHandler');
 const { pool } = require('../db');
+const sharp = require('sharp');
+const { uploadBuffer, destroyByUrl } = require('../utils/cloudinary');
 
 const getProfile = asyncHandler(async (req, res) => {
   const { email } = req.query;
@@ -51,12 +51,33 @@ const updateProfileImage = asyncHandler(async (req, res) => {
   }
 
   const normalizedEmail = String(email).trim().toLowerCase();
-  const imageUrl = `/uploads/${req.file.filename}`;
+  const [existingRows] = await pool.query(
+    'SELECT profile_image_url FROM Users WHERE email = ? LIMIT 1',
+    [normalizedEmail]
+  );
+
+  let buffer = req.file.buffer;
+  try {
+    buffer = await sharp(buffer)
+      .rotate()
+      .resize(512, 512, { fit: 'cover' })
+      .jpeg({ quality: 82 })
+      .toBuffer();
+  } catch {
+    // keep original buffer
+  }
+
+  const upload = await uploadBuffer(buffer, { folder: 'autodetail/profiles' });
+  const imageUrl = upload.secure_url;
 
   await pool.query('UPDATE Users SET profile_image_url = ? WHERE email = ?', [
     imageUrl,
     normalizedEmail
   ]);
+
+  if (existingRows.length && existingRows[0].profile_image_url) {
+    await destroyByUrl(existingRows[0].profile_image_url);
+  }
 
   return res.json({ image_url: imageUrl });
 });
@@ -79,15 +100,8 @@ const removeProfileImage = asyncHandler(async (req, res) => {
 
   const currentUrl = users[0].profile_image_url;
   await pool.query('UPDATE Users SET profile_image_url = NULL WHERE email = ?', [normalizedEmail]);
-
   if (currentUrl) {
-    const filename = path.basename(currentUrl);
-    const filepath = path.join(__dirname, '../../uploads', filename);
-    try {
-      await fs.unlink(filepath);
-    } catch (err) {
-      // ignore if file missing
-    }
+    await destroyByUrl(currentUrl);
   }
 
   return res.json({ success: true });

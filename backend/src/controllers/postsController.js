@@ -1,8 +1,7 @@
-const fs = require('fs/promises');
-const path = require('path');
 const sharp = require('sharp');
 const { asyncHandler } = require('../utils/asyncHandler');
 const { pool } = require('../db');
+const { uploadBuffer, destroyByUrl } = require('../utils/cloudinary');
 // AI moderation removed by request.
 
 const insertPriceHistory = async (postId, priceValue, currencyValue) => {
@@ -13,25 +12,22 @@ const insertPriceHistory = async (postId, priceValue, currencyValue) => {
   );
 };
 
-const optimizeImage = async (filePath) => {
+const optimizeImageBuffer = async (buffer, format = 'jpeg') => {
   try {
-    const image = sharp(filePath);
-    const ext = path.extname(filePath).toLowerCase();
+    const image = sharp(buffer);
     let pipeline = image
       .rotate()
-      .resize(1200, 1200, { fit: 'inside', withoutEnlargement: true })
-      ;
-    if (ext === '.png') {
+      .resize(1200, 1200, { fit: 'inside', withoutEnlargement: true });
+    if (format === 'png') {
       pipeline = pipeline.png({ quality: 82, compressionLevel: 8 });
-    } else if (ext === '.webp') {
+    } else if (format === 'webp') {
       pipeline = pipeline.webp({ quality: 82 });
     } else {
       pipeline = pipeline.jpeg({ quality: 82 });
     }
-    const buffer = await pipeline.toBuffer();
-    await fs.writeFile(filePath, buffer);
-  } catch (err) {
-    // If optimization fails, keep original
+    return await pipeline.toBuffer();
+  } catch {
+    return buffer;
   }
 };
 
@@ -62,8 +58,13 @@ const createPost = asyncHandler(async (req, res) => {
   }
 
   const files = Array.isArray(req.files) ? req.files : [];
-  await Promise.all(files.map((f) => optimizeImage(f.path)));
-  const imageUrl = files[0] ? `/uploads/${files[0].filename}` : null;
+  const uploads = await Promise.all(
+    files.map(async (file) => {
+      const optimized = await optimizeImageBuffer(file.buffer || Buffer.from(''));
+      return uploadBuffer(optimized, { folder: 'autodetail/posts' });
+    })
+  );
+  const imageUrl = uploads[0] ? uploads[0].secure_url : null;
   // No AI moderation check.
   const yearValue = Number(car_year);
 
@@ -90,8 +91,8 @@ const createPost = asyncHandler(async (req, res) => {
     await insertPriceHistory(result.insertId, priceValue, normalizedCurrency);
   }
 
-  if (files.length) {
-    const values = files.map((file) => [result.insertId, `/uploads/${file.filename}`]);
+  if (uploads.length) {
+    const values = uploads.map((file) => [result.insertId, file.secure_url]);
     await pool.query(
       'INSERT INTO PostImages (post_id, image_url) VALUES ?',
       [values]
@@ -252,6 +253,13 @@ const deletePost = asyncHandler(async (req, res) => {
 
   await assertPostOwnerOrAdmin(id, email);
 
+  const [images] = await pool.query('SELECT image_url FROM PostImages WHERE post_id = ?', [id]);
+  const [postRow] = await pool.query('SELECT image_url FROM posts WHERE id = ? LIMIT 1', [id]);
+  const urls = [
+    ...(images || []).map((i) => i.image_url),
+    ...(postRow && postRow[0] && postRow[0].image_url ? [postRow[0].image_url] : [])
+  ];
+  await Promise.all(urls.map((u) => destroyByUrl(u)));
   await pool.query('DELETE FROM posts WHERE id = ?', [id]);
   await pool.query('DELETE FROM PostImages WHERE post_id = ?', [id]);
   return res.json({ success: true });
@@ -280,11 +288,16 @@ const addPostImages = asyncHandler(async (req, res) => {
   }
   await assertPostOwnerOrAdmin(id, email);
   const files = Array.isArray(req.files) ? req.files : [];
-  await Promise.all(files.map((f) => optimizeImage(f.path)));
   if (!files.length) {
     return res.status(400).json({ error: 'No images uploaded.' });
   }
-  const values = files.map((file) => [id, `/uploads/${file.filename}`]);
+  const uploads = await Promise.all(
+    files.map(async (file) => {
+      const optimized = await optimizeImageBuffer(file.buffer || Buffer.from(''));
+      return uploadBuffer(optimized, { folder: 'autodetail/posts' });
+    })
+  );
+  const values = uploads.map((file) => [id, file.secure_url]);
   await pool.query('INSERT INTO PostImages (post_id, image_url) VALUES ?', [values]);
   // If legacy image_url is empty, set first uploaded as primary
   await pool.query(
@@ -308,6 +321,7 @@ const removePostImage = asyncHandler(async (req, res) => {
     'DELETE FROM PostImages WHERE post_id = ? AND image_url = ?',
     [id, image_url]
   );
+  await destroyByUrl(image_url);
   if (result.affectedRows === 0) {
     await pool.query('UPDATE posts SET image_url = NULL WHERE id = ? AND image_url = ?', [id, image_url]);
   }
