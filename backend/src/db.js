@@ -10,9 +10,10 @@ const {
 } = require('./config/env');
 
 const ca = DB_SSL_CA ? DB_SSL_CA.replace(/\\n/g, '\n') : '';
-const ssl = ca
+const useSsl = Boolean(ca) || DB_SSL_REJECT_UNAUTHORIZED === 'false';
+const ssl = useSsl
   ? {
-      ca,
+      ...(ca ? { ca } : {}),
       rejectUnauthorized: DB_SSL_REJECT_UNAUTHORIZED !== 'false'
     }
   : undefined;
