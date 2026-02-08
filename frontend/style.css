@@ -387,6 +387,16 @@ input[type="search"]::placeholder{
 .app-toast.success{ border-color: #22c55e; }
 .app-toast.error{ border-color: #ef4444; }
 
+.header-avatar{
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.15);
+  display: inline-block;
+}
+
 .footer-contact{
   display: flex;
   gap: 6px;
