@@ -10,7 +10,11 @@ const mailer = SMTP_HOST && SMTP_USER && SMTP_PASS
       auth: {
         user: SMTP_USER,
         pass: SMTP_PASS
-      }
+      },
+      pool: true,
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 15000
     })
   : null;
 
@@ -26,7 +30,11 @@ const sendContact = asyncHandler(async (req, res) => {
   const to = CONTACT_TO || SMTP_USER;
   const subject = 'AutoDetail.az | Kontakt mesajı';
   const text = `Əlaqə: ${emailOrPhone || '-'}\n\nMesaj:\n${message}`;
-  await mailer.sendMail({ from, to, subject, text });
+  const sendPromise = mailer.sendMail({ from, to, subject, text });
+  const timeoutPromise = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error('SMTP timeout')), 15000)
+  );
+  await Promise.race([sendPromise, timeoutPromise]);
   res.json({ message: 'Mesaj göndərildi.' });
 });
 
