@@ -36,7 +36,7 @@ const uploadBuffer = (buffer, options = {}) => {
 const extractPublicId = (url) => {
   if (!url || typeof url !== 'string') return null;
   const clean = url.split('?')[0];
-  const match = clean.match(/\/upload\/(?:v\\d+\\/)?(.+)\\.[a-zA-Z0-9]+$/);
+  const match = clean.match(/\/upload\/(?:v\d+\/)?(.+)\.[a-zA-Z0-9]+$/);
   return match ? match[1] : null;
 };
 
